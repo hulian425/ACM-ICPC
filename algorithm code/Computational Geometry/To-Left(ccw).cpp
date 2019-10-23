@@ -8,7 +8,11 @@ struct Point
 	double x;
 	double y;
 };
+/*three points A (start point), O (center point) and B (end point) then you can compute
+c=(Ax−Ox)(By−Oy)−(Ay−Oy)(Bx−Ox).
 
+If c>0
+the arc is counterclockwise, if c<0 it is clockwise, if c=0 then A, O and B are aligned.*/
 double area(Point A, Point B, Point C)
 {
 	return (A.x * (B.y - C.y)) + B.x * (C.y - A.y) + C.x * (A.y - B.y);
