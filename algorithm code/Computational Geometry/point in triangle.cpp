@@ -47,3 +47,34 @@ int main()
 	else printf("Not Inside\n");
 	return 0;
 }
+
+/* 
+// another method
+struct Point
+{
+	double x;
+	double y;
+};
+double area(Point A, Point B, Point C)
+{
+	return (A.x * (B.y - C.y) + B.x * (C.y - A.y) + C.x * (A.y - B.y));
+}
+bool ToLeft(Point p, Point q, Point s)
+{
+	return area(p, q, s) > 0;
+}  
+int main()
+{
+	Point A = { 0, 0 };
+	Point B = { 20, 0 };
+	Point C = { 10, 30 };
+	Point p = { -10, 15 };
+
+	if (ToLeft(A, B, p) && ToLeft(B, C, p) && ToLeft(C, A, p))
+	{
+		cout << "p is in traingle" << endl;
+	}
+	else
+		cout << "p is not in  vctraingle" << endl;
+	return 0;
+} */
