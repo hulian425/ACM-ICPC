@@ -1,0 +1,27 @@
+#include <algorithm>
+#include <iostream>
+using namespace std;
+// Finding LTL
+struct Point
+{
+	int x;
+	int y;
+};
+int LTL(Point S[], int n) // n > 2
+{
+	int ltl = 0; // the lowest-thrn-leftmost point
+	for (int k = 1; k < n; k++) // test all points
+	{
+		if (S[k].y < S[ltl].y || (S[k].y == S[ltl].y && S[k].x < S[ltl].x))
+			ltl = k;
+	}
+	return ltl;
+}
+int main()
+{
+	Point points[] = { {0, 3}, {2, 2}, {1, 1}, {2, 1},
+					  {3, 0}, {0, 0}, {3, 3} };
+	int n = sizeof(points) / sizeof(points[0]);
+	cout << LTL(points, n) << endl;
+	return 0;
+}
