@@ -2,6 +2,7 @@
 #include <iostream>
 using namespace std;
 // Finding LTL
+// 三点一线未解决
 struct Point
 {
 	int x;
