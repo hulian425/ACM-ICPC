@@ -48,6 +48,7 @@ int ToLeft(point p, point q, point s)
 	else return -1;
 }
 // sort cmp
+// 极角排序
 bool cmp(point a, point b)
 {
 	if (ToLeft(p0, a, b) > 0) return true;
