@@ -1,3 +1,4 @@
+// GrahamScan algorithm O(nlogn)
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -5,13 +6,17 @@
 #include <stack>
 using namespace std;
 
+const int N = 5e5 + 5;
+int n;
 struct point
 {
 	int x;
 	int y;
 };
+point points[N];
 point p0;
 stack<point> S, T;
+vector<point> ans;
 void LTL(point points[], int n)
 {
 	int ltl = 0;
@@ -19,15 +24,15 @@ void LTL(point points[], int n)
 	p0.y = points[0].y;
 	for (int i = 0; i < n; i++)
 	{
-		if (points[i].x < p0.x)
+		if (points[i].y < p0.y)
 		{
 			p0.x = points[i].x;
 			p0.y = points[i].y;
 			ltl = i;
 		}
-		else if (points[i].x == p0.x)
+		else if (points[i].y == p0.y)
 		{
-			if (points[i].y < p0.y)
+			if (points[i].x < p0.x)
 			{
 				p0.x = points[i].x;
 				p0.y = points[i].y;
@@ -35,6 +40,7 @@ void LTL(point points[], int n)
 			}
 		}
 	}
+	//printf("ltl : x = %d, y = %d\n", points[ltl].x, points[ltl].y);
 	swap(points[0], points[ltl]);
 }
 
@@ -65,6 +71,12 @@ void GrahamScan(point points[], int n)
 	// ltl
 	LTL(points, n);
 	sort(points + 1, points + n, cmp);
+	/*for (int i = 0; i < n; i++)
+	{
+		printf("x = %d, y = %d\n", points[i].x, points[i].y);
+
+	}
+	cout << "paixu" << endl;*/
 	for (int i = n - 1; i >= 2; i--)
 	{
 		T.push(points[i]);
@@ -77,30 +89,24 @@ void GrahamScan(point points[], int n)
 		point tmp = S.top();
 		S.pop();
 		int flag = ToLeft(S.top(), tmp, T.top());
-		if ( flag > 0)
+		if ( flag >= 0)
 		{
 			S.push(tmp);
 			S.push(T.top());
 			T.pop();
 		}
-		else
+		else if ( flag < 0)
 		{
-			T.pop();
+			continue;
 		}
-	}
-}
 
-int main()
-{
-	point points[] = { {0, 3}, {1, 1}, {2, 2}, {4, 4},
-					  {0, 0}, {1, 2}, {3, 1}, {3, 3} };
-	int n = sizeof(points) / sizeof(points[0]);
-	GrahamScan(points, n);
+
+	}
 	while (!S.empty())
 	{
-		printf("x = %d, y = %d\n", S.top().x, S.top().y);
-		S.pop();
+		//printf("x = %d, y = %d\n", S.top().x, S.top().y);
+		ans.push_back(S.top()); S.pop();
 	}
-	
-	return 0;
+	return;
 }
+
