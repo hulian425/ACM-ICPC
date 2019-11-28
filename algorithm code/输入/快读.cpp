@@ -15,3 +15,6 @@ int main(){
 	cout.tie(0);
 	
 }
+
+// 文件读取
+freopen("in.txt","r",stdin);
