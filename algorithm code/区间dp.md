@@ -13,9 +13,13 @@ for (int k = l; k <= r - 1; k++)
 ## Halloween Costumes
 [Halloween Costumes](https://vjudge.net/problem/LightOJ-1422)
 **题意**
+
 穿衣服，脱衣服，脱过的衣服不能再穿,问最少要准备几件衣服？
+
 转移 + 区间dp的固定写法
-a[i]和a[j]相等的时候    
+
+a[i]和a[j]相等的时候  
+
 dp[i][j]=dp[i][j-1]
 ```c++
 if (a[l] == a[r])
