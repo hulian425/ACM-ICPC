@@ -12,6 +12,7 @@ for (int k = l; k <= r - 1; k++)
 ```
 ## Halloween Costumes
 [Halloween Costumes](https://vjudge.net/problem/LightOJ-1422)
+
 **题意**
 
 穿衣服，脱衣服，脱过的衣服不能再穿,问最少要准备几件衣服？
