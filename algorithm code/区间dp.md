@@ -1,4 +1,5 @@
-[toc]
+[Brackets](#Brackets)
+[Halloween Costumes](#Halloween Costumes)
 
 ## Brackets
 [poj 2955](http://poj.org/problem?id=2955)
