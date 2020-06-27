@@ -2,6 +2,8 @@
 
 [二、Halloween Costumes](#Costumes)
 
+[三、Multiplication  Puzzle](#Multiplication)
+
 ## Brackets
 [poj 2955](http://poj.org/problem?id=2955)
 求序列的子序列的最大括号匹配数量
@@ -40,7 +42,7 @@ if (a[l] == a[r])
 
 **题意**
 
-每次删掉一个数$a[i]$, $sum += a[i] * a[i-1] * a[i+1]$, 求最小sum。
+每次删掉一个数`a[i]`, `sum += a[i] * a[i-1] * a[i+1]`, 求最小sum。
 
 **题解**
 枚举k， k作为区间的中点 `dp[l][r] = min(dp[l][k]+dp[k][r]+a[k]*a[l]*a[r], dp[l][r])`;
