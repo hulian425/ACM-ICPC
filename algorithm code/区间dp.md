@@ -5,6 +5,7 @@
 [三、Multiplication  Puzzle](#Multiplication)
 
 ## Brackets
+
 [poj 2955](http://poj.org/problem?id=2955)
 求序列的子序列的最大括号匹配数量
 初始化长度为2的
