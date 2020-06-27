@@ -1,6 +1,6 @@
-[Brackets](#Brackets)
+[一、 Brackets](#Brackets)
 
-[Halloween Costumes](#Halloween Costumes)
+[二、Halloween Costumes](#Costumes)
 
 ## Brackets
 [poj 2955](http://poj.org/problem?id=2955)
@@ -14,7 +14,7 @@ for (int k = l; k <= r - 1; k++)
     dp[l][r] = max(dp[l][r], dp[l][k] + dp[k+1][r]);
   }
 ```
-## Halloween Costumes
+## Costumes
 [Halloween Costumes](https://vjudge.net/problem/LightOJ-1422)
 
 **题意**
