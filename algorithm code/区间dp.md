@@ -50,6 +50,7 @@ if (a[l] == a[r])
 每次删掉一个数`a[i]`, `sum += a[i] * a[i-1] * a[i+1]`, 求最小sum。
 
 **题解**
+
 枚举k， k作为区间的中点 `dp[l][r] = min(dp[l][k]+dp[k][r]+a[k]*a[l]*a[r], dp[l][r])`;
 
 
