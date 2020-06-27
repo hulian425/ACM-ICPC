@@ -8,7 +8,9 @@
 
 [poj 2955](http://poj.org/problem?id=2955)
 求序列的子序列的最大括号匹配数量
+
 初始化长度为2的
+
 ```c++
 if (check(s[l-1], s[r-1]))
   dp[l][r] = max(dp[l][r], dp[l+1][r-1] + 2);
@@ -18,6 +20,7 @@ for (int k = l; k <= r - 1; k++)
   }
 ```
 ## Costumes
+
 [Halloween Costumes](https://vjudge.net/problem/LightOJ-1422)
 
 **题意**
@@ -29,6 +32,7 @@ for (int k = l; k <= r - 1; k++)
 a[i]和a[j]相等的时候  
 
 dp[i][j]=dp[i][j-1]
+
 ```c++
 if (a[l] == a[r])
   dp[l][r] = min(dp[l][r], dp[l][r-1]);
