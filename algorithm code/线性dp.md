@@ -13,7 +13,7 @@
 
 那么 dp[i][j] = max(dp[i-1][j], dp[i][j-m] + sum[i] - sum[i-m])
 
-```
+```c++
   rep(i, 1, n)
   {
     a[i] = re;
