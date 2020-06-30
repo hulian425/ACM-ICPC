@@ -1,4 +1,4 @@
-[C. George and Job k个同长子段最大和](#George_and_Job)
+[C. George and Job **k个同长子段最大和**](#George_and_Job)
 
 ## George_and_Job
 
