@@ -296,10 +296,23 @@ for (int i = 0, j = 0; i < n; i ++ )
 ```
 
 ## 位运算
+
+**位运算可以通过转化为逻辑表达式来化简**
+
 ```c
 求n的第k位数字: n >> k & 1
 返回n的最后一位1：lowbit(n) = n & -n
 ```
+### 异或
+$F = A\bigoplus B$
+
+逻辑表达式：$F = \overline{A}B + \overline{B}A$
+
+`0⊕0=0,0⊕1=1,1⊕0=1,1⊕1=0`
+
+
+
+
 
 ## 离散化
 ```c
@@ -641,6 +654,18 @@ void get_eulers(int n)
 ```c++
 ll mult_mod(ll a,ll b,ll mod){
     return (a*b-(ll)(a/(long double)mod*b+1e-3)*mod+mod)%mod;
+}
+```
+
+```c++
+long long qadd(long long a, long long b, long long p)
+{
+    long long ans = 0;
+    for (; b; b >>= 1) {
+        if (b & 1) ans = (ans + a) % p;
+        a = a * 2 % p;
+    }
+    return ans;
 }
 ```
 ### 快速幂
@@ -1188,6 +1213,80 @@ for (int i = 1; i <= n; i ++ )
 ULL get(int l, int r)
 {
     return h[r] - h[l - 1] * p[r - l + 1];
+}
+
+```
+
+## 并查集
+### 整数并查集
+
+```c++
+int par[MAX_N]; //父亲
+int rank[MAX_N]; //树的高度
+
+//初始化n个元素
+void init(int n) {
+	for (int i = 0; i < n; i++)
+	{
+		par[i] = i;
+		rank[i] = 0;
+	}
+}
+
+// 查询树的根
+int find(int x) {
+	if (par[x] == x)
+	{
+		return x;
+	}
+	else
+	{
+		return par[x] = find(par[x]); //将他们全部直接连在根上。
+	}
+}
+
+//合并x和y所属的集合
+void unite(int x, int y)
+{
+	x = find(x);
+	y = find(y);
+	if(x == y) return ;
+	if (rank[x] < rank[y])
+	{
+		par[x] = y;
+	}
+	else {
+		par[y] = x;
+		if (rank[x] == rank[y]) rank[x]++;
+	}
+}
+
+```
+### 字符串并查集
+
+```c++
+map<string, string> father;
+string find(string x)
+{
+    string a = x;
+    while (x != father[x])
+    {
+        x = father[x];
+    }
+    while (a != father[a])
+    {
+        string z = a;
+        a = father[a];
+        father[z] = x;
+    }
+    return x;
+}
+void bing(string a, string b)
+{
+    string fa = find(a);
+    string fb = find(b);
+    if (fa != fb)
+        father[fa] = fb;
 }
 
 ```
@@ -2055,6 +2154,92 @@ signed main()
     }
 }
 ```
+### 求lca
+#### 树上倍增法
+```c++
+const int N = 40010, M = N * 2;
+
+int n, m;
+int h[N], e[M], ne[M], idx;
+int depth[N], fa[N][16];
+int q[N];
+
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void bfs(int root)
+{
+    memset(depth, 0x3f, sizeof depth);
+    depth[0] = 0, depth[root] = 1;
+    int hh = 0, tt = 0;
+    q[0] = root;
+    while (hh <= tt)
+    {
+        int t = q[hh ++ ];
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int j = e[i];
+            if (depth[j] > depth[t] + 1)
+            {
+                depth[j] = depth[t] + 1;
+                q[ ++ tt] = j;
+                fa[j][0] = t;
+                for (int k = 1; k <= 15; k ++ )
+                    fa[j][k] = fa[fa[j][k - 1]][k - 1];
+            }
+        }
+    }
+}
+
+int lca(int a, int b)
+{
+    if (depth[a] < depth[b]) swap(a, b);
+    for (int k = 15; k >= 0; k -- )
+        if (depth[fa[a][k]] >= depth[b])
+            a = fa[a][k];
+    if (a == b) return a;
+    for (int k = 15; k >= 0; k -- )
+        if (fa[a][k] != fa[b][k])
+        {
+            a = fa[a][k];
+            b = fa[b][k];
+        }
+    return fa[a][0];
+}
+
+int main()
+{
+    scanf("%d", &n);
+    int root = 0;
+    memset(h, -1, sizeof h);
+
+    for (int i = 0; i < n; i ++ )
+    {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        if (b == -1) root = a;
+        else add(a, b), add(b, a);
+    }
+
+    bfs(root);
+
+    scanf("%d", &m);
+    while (m -- )
+    {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        int p = lca(a, b);
+        if (p == a) puts("1");
+        else if (p == b) puts("2");
+        else puts("0");
+    }
+
+    return 0;
+}
+
+```
 ## 动态规划
 
 ### 背包问题
@@ -2356,7 +2541,7 @@ unordered_set, unordered_map, unordered_multiset, unordered_multimap, 哈希表
     reset()  把所有位变成0
     flip()  等价于~
     flip(k) 把第k位取反
-```c++
+​```c++
     // 构造 
     bitset<4> bitset1;　　//无参构造，长度为４，默认每一位为０
 
@@ -2449,10 +2634,10 @@ list
     a.insert(a.begin(),100); //在a的开始位置（即头部）插入100
     a.insert(a.begin(),2, 100); //在a的开始位置插入2个100
     a.insert(a.begin(),b.begin(), b.end());//在a的开始位置插入b从开始到结束的所有位置的元素
-
+    
     a.erase(a.begin()); //将a的第一个元素删除
     a.erase(a.begin(),a.end()); //将a的从begin()到end()之间的元素删除。
-
+    
     list<int>a{6,7,8,9,7,10};
     a.remove(7);
 ```
@@ -2461,7 +2646,7 @@ list
 
 ### 凸包
 #### Andrw_algorithm
-```c++
+​```c++
 struct vec
 {
     double x, y;
