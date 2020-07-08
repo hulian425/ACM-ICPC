@@ -1,5 +1,7 @@
 [C. George and Job **k个同长子段最大和**](#George_and_Job)
 
+[多个状态线性dp  Make_The_Fence_Great_Again](#Make_The_Fence_Great_Again)
+
 ## George_and_Job
 
 [C. George and Job](https://codeforces.com/problemset/problem/467/C)
@@ -28,4 +30,44 @@
       dp[i][j] = max(dp[i-1][j], dp[i-m][j-1] + a[i] - a[i - m]);
     }
   }
+```
+
+## Make_The_Fence_Great_Again
+
+[D. Make The Fence Great Again](https://codeforces.com/problemset/problem/1221/D)
+
+**题意**
+
+一个序列，每个位置的数`a[i]`对应一个操作消耗`b[i]`，每操作一次，这个数+1，消耗增加`b[i]`,经过一系列操作，使序列的每一个数与他相邻的数大小不一样，问最小消耗多大？
+
+**题解**
+
+每个数最多+2
+用dp[N][3] 线性递推
+
+```c++
+case{
+        int n; cin >> n;
+        rep(i,1, n)
+        {
+            cin >> a[i];
+            cin >> b[i];
+            dp[i][0] = dp[i][1] = dp[i][2] = 0x3f3f3f3f3f3f3f3f;
+        }
+        dp[1][0] = 0, dp[1][1] = b[1], dp[1][2] = b[1]*2;
+        rep(i, 2, n)                        
+        {
+            if (a[i] != a[i-1])
+            dp[i][0] = min(dp[i-1][0], dp[i][0]);
+            if (a[i] != a[i-1] + 1)
+            dp[i][0] = min(dp[i-1][1], dp[i][0]);
+            if (a[i]!= a[i-1] +2) dp[i][0] = min(dp[i][0], dp[i-1][2]);
+            if (a[i] +1 != a[i-1]) dp[i][1] = min(dp[i-1][0]+b[i] , dp[i][1]);
+            if (a[i] +1 != a[i-1] + 1) dp[i][1] = min(dp[i-1][1]+b[i] , dp[i][1]);
+            if (a[i] +1 != a[i-1] + 2) dp[i][1] = min(dp[i-1][2]+b[i] , dp[i][1]);
+            if (a[i] +1  +1!= a[i-1] + 2) dp[i][2] = min(dp[i-1][2]+2*b[i] , dp[i][2]);
+            if (a[i] +1  +1!= a[i-1] + 1) dp[i][2] = min(dp[i-1][1]+2*b[i] , dp[i][2]);
+            if (a[i] +1  +1!= a[i-1] ) dp[i][2] = min(dp[i-1][0]+2*b[i] , dp[i][2]);
+        }
+        cout << min(min(dp[n][1], dp[n][0]),dp[n][2]) << endl;
 ```
