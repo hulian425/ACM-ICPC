@@ -1,3 +1,5 @@
+[权值LCS](#Ada_and_Subsequence)
+
 [C. George and Job **k个同长子段最大和**](#George_and_Job)
 
 [多个状态线性dp  Make_The_Fence_Great_Again](#Make_The_Fence_Great_Again)
@@ -8,7 +10,6 @@
 
 [Piggy-Bank 完全背包求最小价值](#Piggy-Bank)
 
-[权值LCS](#Ada_and_Subsequence)
 
 ## Ada_and_Subsequence
 
