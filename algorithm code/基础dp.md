@@ -8,6 +8,43 @@
 
 [Piggy-Bank 完全背包求最小价值](#Piggy-Bank)
 
+[权值LCS](#Ada_and_Subsequence)
+
+## Ada_and_Subsequence
+
+[Ada and Subsequence ](https://vjudge.net/problem/SPOJ-ADASEQEN)
+
+**题意**
+
+在LCS的基础上增加了字母的权值
+
+**题解**
+
+```
+            dp[i][j] = max(dp[i][j-1], dp[i-1][j]); 
+            if (s[i] == t[j]) dp[i][j] = max(dp[i][j], dp[i-1][j-1]+ w[s[i] - 'a']) ;
+```
+
+```
+STDIN
+    int n, m;
+    cin >> n >> m;
+    rep(i, 0, 25)
+    {
+        cin >> w[i];
+    }
+    scanf("%s%s", s +1, t +1);
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= m; j++)
+        {
+            dp[i][j] = max(dp[i][j-1], dp[i-1][j]); 
+            if (s[i] == t[j]) dp[i][j] = max(dp[i][j], dp[i-1][j-1]+ w[s[i] - 'a']) ;
+        }
+    }
+    cout <<dp[n][m] <<endl;
+```
+
 ## George_and_Job
 
 [C. George and Job](https://codeforces.com/problemset/problem/467/C)
