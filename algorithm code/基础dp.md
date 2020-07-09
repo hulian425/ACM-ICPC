@@ -2,6 +2,8 @@
 
 [多个状态线性dp  Make_The_Fence_Great_Again](#Make_The_Fence_Great_Again)
 
+[求个数大于总数一般的数](#Ignatius_and_the_Princess_IV)
+
 ## George_and_Job
 
 [C. George and Job](https://codeforces.com/problemset/problem/467/C)
@@ -70,4 +72,39 @@ case{
             if (a[i] +1  +1!= a[i-1] ) dp[i][2] = min(dp[i-1][0]+2*b[i] , dp[i][2]);
         }
         cout << min(min(dp[n][1], dp[n][0]),dp[n][2]) << endl;
+```
+
+## Ignatius_and_the_Princess_IV
+
+[https://vjudge.net/problem/HDU-1029](https://vjudge.net/problem/HDU-1029)
+
+**题意**
+
+求序列种个数大于(n+1)/2的数
+
+**题解**
+
+因为有个数大于一半，考虑每出现一个数记录值x，cnt = 1，再出现一个不同的数cnt--,再出现一个相同的数cnt++,cnt = 0时，将x变为最新出现的数，最后x的值就是个数大于个数一半的数
+
+```c++
+    int n;
+    while (~scanf("%lld", &n)){
+        int ans = -1;
+        int cnt = 0;
+        rep(i, 1, n)
+        {
+            int t;
+            t = re;
+            if (cnt == 0)
+            {
+                ans = t;
+                cnt++;
+            }
+            else {
+                if (ans!=t)cnt--;
+                else cnt++;
+            }
+        }
+        cout << ans << endl;
+    }
 ```
