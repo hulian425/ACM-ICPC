@@ -4,6 +4,8 @@
 
 [求个数大于总数一般的数](#Ignatius_and_the_Princess_IV)
 
+[Doing_Homework状态压缩dp](#Doing_Homework)
+
 ## George_and_Job
 
 [C. George and Job](https://codeforces.com/problemset/problem/467/C)
@@ -107,4 +109,80 @@ case{
         }
         cout << ans << endl;
     }
+```
+
+## Doing_Homework
+
+[Doing Homework](https://vjudge.net/problem/HDU-1074#author=634579757)
+
+**题意**
+
+有n个任务，每个任务有一个截止时间，超过截止时间一天，要扣一个分。
+求如何安排任务，使得扣的分数最少。
+
+**题解**
+
+因为数据的关系，用状压dp，已完成的任务个数为阶段递推，因为输入已经给的是字典序，所以输出倒着输出就可以了
+
+```c++
+const int N = 16;
+pair<string, PII> a[N];
+int dp[1 << N];
+int pre[1 << N];
+int n;
+void output(int status)
+{
+    if (status == 0)
+        return;
+    int t = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if ((status & (1 << i)) != 0 && (pre[status] & (1 << i)) == 0)
+        {
+            t = i;
+            break;
+        }
+    }
+    output(pre[status]);
+    cout << a[t].first << endl;
+}
+signed main()
+{
+    STDIN
+    case{
+        cin >> n;
+        rep(i ,0, n-1)  
+        {
+            cin >> a[i].first >> a[i].second.first>>a[i].second.second;
+        }
+        for (int i = 0; i < 1<< n; i++)
+            dp[i]=INF1;
+        dp[0] = 0;
+        for (int i = 0; i < (1 << n); i++ )
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (i & (1<<j))continue;
+                int s = 0;
+                for (int k = 0; k< n; k++)
+                {
+                    if (i&(1<<k))
+                    {
+                        s += a[k].second.second;
+                    }
+                }
+                s += a[j].second.second;
+                if (s > a[j].second.first) s-=a[j].second.first;
+                else s = 0;
+                if (dp[i|(1<<j)] > s + dp[i])
+                {
+                    dp[i|(1<<j)]  = s + dp[i];
+                    pre[i|(1<<j)] = i;
+                }
+            }
+        }
+        cout << dp[(1<<n)-1] << endl;
+        output((1<<n)-1);
+    }
+}
 ```
