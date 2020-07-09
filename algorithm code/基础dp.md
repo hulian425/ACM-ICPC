@@ -6,6 +6,8 @@
 
 [Doing_Homework状态压缩dp](#Doing_Homework)
 
+[Piggy-Bank 完全背包求最小价值](#Piggy-Bank)
+
 ## George_and_Job
 
 [C. George and Job](https://codeforces.com/problemset/problem/467/C)
@@ -186,3 +188,50 @@ signed main()
     }
 }
 ```
+
+## Piggy-Bank
+
+[HDU - 1114 ](https://vjudge.net/problem/HDU-1114#author=SCU2018)
+
+**题意**
+
+存钱罐装钱
+
+完全背包求恰好装满的最小价值
+
+**题解**
+
+完全背包求最小值，dp初始化INF，注意dp[0] = 0；max改为min
+
+```c++
+const int N = 100000;
+int v[N], w[N];
+int dp[N];
+signed main()
+{
+    STDIN
+    case{
+        int e, f;cin >> e >> f;
+        int n;
+        cin >> n;
+        int V = f - e;
+        rep(i ,1, n)
+        {
+            cin >> v[i] >> w[i];
+        }
+        memset(dp,0x3f,sizeof dp);
+        dp[0] = 0;
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = w[i]; j <=V; j++)
+            {
+                dp[j] = min(dp[j], dp[j-w[i]] + v[i]);
+            }
+        }
+        if (dp[V] >= 0x3f3f3f3f) puts("This is impossible.");
+        
+        else printf("%s%lld.\n", "The minimum amount of money in the piggy-bank is ", dp[V]);
+    }
+}
+```
+
