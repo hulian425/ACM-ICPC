@@ -18,6 +18,7 @@
 [C. Two Arrays](https://codeforces.com/contest/1288/problem/C)
 
 **题意**
+
 You are given two integers n and m. Calculate the number of pairs of arrays (a,b) such that:
 * the length of both arrays is equal to m;
 * each element of each array is an integer between 1 and n (inclusive);
