@@ -1,5 +1,5 @@
 
-[转化为dp，选数组成序列C. Two Arrays](#)
+[转化为dp，选数组成序列C. Two Arrays](#Two_Arrays)
 
 [权值LCS](#Ada_and_Subsequence)
 
