@@ -1,3 +1,6 @@
+
+[转化为dp，选数组成序列C. Two Arrays](#)
+
 [权值LCS](#Ada_and_Subsequence)
 
 [C. George and Job **k个同长子段最大和**](#George_and_Job)
@@ -10,6 +13,51 @@
 
 [Piggy-Bank 完全背包求最小价值](#Piggy-Bank)
 
+## Two_Arrays
+
+[C. Two Arrays](https://codeforces.com/contest/1288/problem/C)
+
+**题意**
+You are given two integers n and m. Calculate the number of pairs of arrays (a,b) such that:
+* the length of both arrays is equal to m;
+* each element of each array is an integer between 1 and n (inclusive);
+* ai≤bi for any index i from 1 to m;
+* array a is sorted in non-descending order;
+* array b is sorted in non-ascending order.
+
+```c++
+const int mod = 1e9 + 7;
+int dp[30][3000];
+signed main()
+{
+    STDIN
+    int n, m;
+    cin >> n >> m;
+    /*
+    * 将题目可以转化为在n中选2*m个数，可以不选，问选的方法有几种
+    * dp[i][j]表示长度为i的数组，第一个数是j，有几种选法
+    * dp[i][j] = dp[i-1][j] + dp[i][j+1] 
+    * 
+    * 有时候顺着dp比较难的时候，可以试着倒着dp，题目会简化不少
+    * 这道题还可以用组合数学的方法来做
+    * */
+
+    rep(i, 1, n) dp[1][i] = 1;
+    for (int i = 2; i <= 2 * m; i++)
+    {
+        for (int j = n; j >= 1; j--)
+        {
+            dp[i][j] = (dp[i - 1][j] + dp[i][j + 1]) % mod;
+        }
+    }
+    int ans = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        ans = (ans + dp[2*m][i])%mod;
+    }
+    cout << ans << endl;
+}
+```
 
 ## Ada_and_Subsequence
 
