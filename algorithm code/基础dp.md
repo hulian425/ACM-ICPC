@@ -13,6 +13,43 @@
 
 [Piggy-Bank 完全背包求最小价值](#Piggy-Bank)
 
+## Garland
+
+**题意**
+有一个序列,1-n,0代表空,如何填充这个序列,使得相邻灯泡奇偶对数最小
+
+dp,dp[i][j][k]表示前i个数,用了j个偶数,k表示第i个数是奇数还是偶数
+
+```c++
+/*
+*   dp[i][j][k] 表示前i个数，用了j个偶数，都几个相邻奇偶对
+*   当a[i] % 2 == 1 dp[i][j][1] = min(dp[i-1][j][1], dp[i-1][j][0] + 1;
+    当a[i] % 2 == 0 dp[i][j][0] = min(dp[i-1][j-1][0], dp[i-1][j-1][1] + 1);
+    当 a[i] = 0 dp[i][j][1] = min(dp[i-1][j-1][1], dp[i-1][j-1][0] + 1);
+*/
+ 
+const int N = 105;
+int a[N], dp[N][N][2];
+signed main()
+{
+    // STDIN
+    int n; cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+    memset(dp, 0x3f, sizeof dp);
+    dp[0][0][1] = dp[0][0][0] = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 0; j <= i; j++)
+        {
+            if (a[i] % 2 == 0) dp[i][j][0] = min(dp[i-1][j-1][0], dp[i-1][j-1][1] + 1);
+            if (a[i] %2 || a[i] == 0) dp[i][j][1] = min(dp[i-1][j][1], dp[i-1][j][0] + 1);
+        }
+    }
+    cout << min(dp[n][n/2][1], dp[n][n/2][0]) << endl;
+```
+
 ## Two_Arrays
 
 [C. Two Arrays](https://codeforces.com/contest/1288/problem/C)
