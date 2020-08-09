@@ -58,13 +58,17 @@ using namespace std;
 #define sd second
 #define pb push_back
 typedef long long ll;
-#include <ext/pb_ds/hash_policy.hpp>
-#include<ext/pb_ds/tree_policy.hpp>
-#include<ext/pb_ds/assoc_container.hpp>//头文件
-using namespace  __gnu_pbds;
+// #include <ext/pb_ds/hash_policy.hpp>
+// #include<ext/pb_ds/tree_policy.hpp>
+// #include<ext/pb_ds/assoc_container.hpp>//头文件
+// using namespace  __gnu_pbds;
 // int size = 256 << 20; // 256MB/
 // char *p = (char*)malloc(size) + size;
 // __asm__("movl %0, %%esp\n" :: "r"(p) );
+// linux系统可用
+// typedef __int128_t ll;
+// #define LL long long
+// #define int ll
 #define sor(x, y) sort(x, x + y);
 #define MEM(x, v) memset(x, v, sizeof(x))
 #define rep(i, a, b) for (register int i = a; i <= b; i++)
@@ -72,11 +76,9 @@ using namespace  __gnu_pbds;
 #define PIII pair<int, PII>
 #define re read()
 inline int read(){char tempt = getchar();int x = 0, f = 0;while (tempt < '0' || tempt > '9')f |= tempt == '-', tempt = getchar();while (tempt >= '0' && tempt <= '9')x = x * 10 + tempt - '0', tempt = getchar();return f ? -x : x;}
+void write(register int x){if (x < 0){putchar('-');x = -x;}if (x < 10)putchar(x + '0');else{write(x / 10);putchar(x % 10 + '0');}}
+inline void print(const register int x, const register char c = '\n'){write(x);putchar(c);}
 #define case  int T;cin >> T;rep(_, 1, T)
-// linux系统可用
-// typedef __int128_t ll;
-// #define LL long long
-#define int ll
 template<class T> void _R(T &x) { cin >> x; }
 void _R(int &x) { x = re; }
 // void _R(int64_t &x) { x = re; }
@@ -85,8 +87,16 @@ void _R(char &x) { scanf(" %c", &x); }
 void _R(char *x) { scanf("%s", x); }
 void R() {}
 template<class T, class... U> void R(T &head, U &... tail) { _R(head); R(tail...); }
-void write(register int x){if (x < 0){putchar('-');x = -x;}if (x < 10)putchar(x + '0');else{write(x / 10);putchar(x % 10 + '0');}}
-inline void print(const register int x, const register char c = '\n'){write(x);putchar(c);}
+template<class T> void _W(const T &x) { cout << x; }
+void _W(const int &x) { cout << x;}
+// void _W(const int64_t &x) { printf("%lld", x); }
+void _W(const double &x) { printf("%.16f", x); }
+void _W(const char &x) { putchar(x); }
+void _W(const char *x) { printf("%s", x); }
+template<class T,class U> void _W(const pair<T,U> &x) {_W(x.F); putchar(' '); _W(x.S);}
+template<class T> void _W(const vector<T> &x) { for (auto i = x.begin(); i != x.end(); _W(*i++)) if (i != x.cbegin()) putchar(' '); }
+void W() {}
+template<class T, class... U> void W(const T &head, const U &... tail) { _W(head); putchar(sizeof...(tail) ? ' ' : '\n'); W(tail...); }
 inline int qmi(int m, int k, int p){int res = 1 % p, t = m;while (k){if (k & 1)res = res * t % p;t = t * t % p;k >>= 1;}return res;}
 inline int qmi(int m, int k){int res = 1, t = m;while (k){if (k & 1)res = res * t;t = t * t;k >>= 1;}return res;}
 inline bool ou(int x){return x % 2 == 0;}
@@ -94,6 +104,8 @@ inline bool ou(int x){return x % 2 == 0;}
 // gp_hash_table <int,int>g;
 
 // cc_hash_table <int,int> ma; // 拉链法，建议使用
+
+// 动态维护一个有序表，支持在O(logN)的时间内完成插入一个元素，删除一个元素，查找第K大元素的任务
 
 cout.precision(20); // 设置输出精度
 ```
