@@ -1,3 +1,5 @@
+[TOC]
+
 聪明的投资者
 
 雪球
@@ -40,39 +42,58 @@
 #include <unordered_map>
 #include <cmath>
 using namespace std;
-#pragma comment(linker, "/STACK:1024000000,1024000000")
-#define INF 0x7f7f7f7f  //2139062143
-#define INF1 0x3f3f3f3f //1061109567
+// #pragma comment(linker, "/STACK:1024000000,1024000000")
+// #define INF 0x7f7f7f7f  //2139062143
+#define INF 0x3f3f3f3f //1061109567
 #define INF2 2147483647
 #define llINF 9223372036854775807
 #define pi 3.14159265358979323846264338327950254
 #define pb push_back
-#define ll long long
 #define debug cout << "debug\n";
-#define STDIN                      \
-    freopen("in.txt", "r", stdin); \
-    freopen("out.txt", "w", stdout);
-#define IOS                      \
-    ios::sync_with_stdio(false); \
-    cin.tie(NULL);
-#define scai(x) scanf("%d", &x)
-#define sca2i(x, y) scanf("%d %d", &x, &y)
-#define scaf(x) scanf("%lf", &x)
-#define sca2f(x, y) scanf("%lf %lf", &x, &y)
-#define For(m, n) for (int i = m; i < n; i++)
+#define STDIN freopen("in.txt", "r", stdin);freopen("out.txt", "w", stdout);
+#define IOS ios::sync_with_stdio(false);cin.tie(NULL);
 #define PII pair<int, int>
 #define PLL pair<long, long>
 #define ft first
 #define sd second
 #define pb push_back
-#define lson o << 1, l, mid
-#define rson o << 1 | 1, mid + 1, r
-#define FOR(i, a, b) for (int i = (a); i <= (b); i++)
-#define ROF(i, a, b) for (int i = (a); i >= (b); i--)
+typedef long long ll;
+#include <ext/pb_ds/hash_policy.hpp>
+#include<ext/pb_ds/tree_policy.hpp>
+#include<ext/pb_ds/assoc_container.hpp>//头文件
+using namespace  __gnu_pbds;
+// int size = 256 << 20; // 256MB/
+// char *p = (char*)malloc(size) + size;
+// __asm__("movl %0, %%esp\n" :: "r"(p) );
+#define sor(x, y) sort(x, x + y);
 #define MEM(x, v) memset(x, v, sizeof(x))
-#define rep(i, a, b) for (int i = a; i <= b; i++)
-#define rrep(i, a, b) for (int i = a; i >= b; i--)
+#define rep(i, a, b) for (register int i = a; i <= b; i++)
+#define rrep(i, a, b) for (register int i = a; i >= b; i--)
 #define PIII pair<int, PII>
+#define re read()
+inline int read(){char tempt = getchar();int x = 0, f = 0;while (tempt < '0' || tempt > '9')f |= tempt == '-', tempt = getchar();while (tempt >= '0' && tempt <= '9')x = x * 10 + tempt - '0', tempt = getchar();return f ? -x : x;}
+#define case  int T;cin >> T;rep(_, 1, T)
+// linux系统可用
+// typedef __int128_t ll;
+// #define LL long long
+#define int ll
+template<class T> void _R(T &x) { cin >> x; }
+void _R(int &x) { x = re; }
+// void _R(int64_t &x) { x = re; }
+void _R(double &x) { scanf("%lf", &x); }
+void _R(char &x) { scanf(" %c", &x); }
+void _R(char *x) { scanf("%s", x); }
+void R() {}
+template<class T, class... U> void R(T &head, U &... tail) { _R(head); R(tail...); }
+void write(register int x){if (x < 0){putchar('-');x = -x;}if (x < 10)putchar(x + '0');else{write(x / 10);putchar(x % 10 + '0');}}
+inline void print(const register int x, const register char c = '\n'){write(x);putchar(c);}
+inline int qmi(int m, int k, int p){int res = 1 % p, t = m;while (k){if (k & 1)res = res * t % p;t = t * t % p;k >>= 1;}return res;}
+inline int qmi(int m, int k){int res = 1, t = m;while (k){if (k & 1)res = res * t;t = t * t;k >>= 1;}return res;}
+inline bool ou(int x){return x % 2 == 0;}
+// tree<ll,null_type,std::less<ll>,splay_tree_tag,tree_order_statistics_node_update> t;//splay,只要把splay改为rb就是红黑树XD,另外注意std::less
+// gp_hash_table <int,int>g;
+
+// cc_hash_table <int,int> ma; // 拉链法，建议使用
 
 cout.precision(20); // 设置输出精度
 ```
@@ -398,8 +419,45 @@ $a^{p-1}\equiv 1(mod p)$这个书写方式更加常用
 $a^{\phi(n)}\equiv 1 (mod n)$ 
 
 ## 容斥原理
+```c++
+#include<iostream>
+using namespace std;
 
+const int N = 20;
+typedef long long ll;
+int p[N];
 
+int n, m;
+
+int main()
+{
+    cin >> n >> m;
+    for (int i = 0; i < m; i++) cin>>p[i];
+    int res = 0;
+    for (int i = 1; i < 1<< m; i++)
+    {
+        int t = 1, s = 0;
+        for (int j = 0; j < m; j++)
+        {
+            if (i >> j &1)
+            {
+                if ((ll)t * p[j] > n)
+                {
+                    t = -1; break;
+                }
+                t *= p[j];
+                s++;
+            }
+        }
+        if (t!= -1)
+        {
+            if (s&1) res += n/t;
+            else res -= n/t;
+        }
+    }
+    cout << res << endl ; return 0;
+}
+```
 
 ## 质数
 ### 质数的判定-试除法
@@ -414,7 +472,7 @@ bool is_prime(int x)
 }
 
 ```
-### 分解质因数-试除法
+### 分解 质因数 -试除法
 ```c
 void divide(int x)
 {
@@ -429,7 +487,7 @@ void divide(int x)
     cout << endl;
 }
 ```
-### 埃氏筛法
+### 埃氏 筛 法
 ```c
 int primes[N], cnt;     // primes[]存储所有素数
 bool st[N];         // st[x]存储x是否被筛掉
@@ -445,7 +503,7 @@ void get_primes(int n)
     }
 }
 ```
-### 线性筛法
+### 线性 筛 法
 ```c
 
 //线性筛法-O(n), n = 1e7的时候基本就比埃式筛法快一倍了
@@ -466,7 +524,7 @@ void get_primes(int n)
     }
 }  
 ```
-#### 线性筛法求莫比乌斯函数mobius
+#### 线性筛法求 莫比乌斯函数 mobius
 ```c++
 int primes[N], cnt;
 bool st[N];
@@ -613,12 +671,12 @@ cout<<res<<endl;
 
 ### 筛法求欧拉函数
 
-|      |                                                              |
-| ---- | ------------------------------------------------------------ |
-|      | 质数i的欧拉函数即为<code>phi[i] = i - 1</code>：1 ~ i-1均与i互质，共i-1个。 |
-|      | <code>phi[primes[j] * i]</code>分为两种情况：                |
-|      | ① `i % primes[j] == 0`时：`primes[j]`是<code>i</code>的最小质因子，也是<code>primes[j] * i</code>的最小质因子，因此<code>1 - 1 / primes[j]</code>这一项在<code>phi[i]</code>中计算过了，只需将基数N修正为<code>primes[j]</code>倍，最终结果为<code>phi[i] * primes[j]</code>。 |
-|      | ② <code>i % primes[j] != 0</code>：<code>primes[j]</code>不是<code>i</code>的质因子，只是<code>primes[j] * i</code>的最小质因子，因此不仅需要将基数N修正为`primes[j]`倍，还需要补上`1 - 1 / primes[j]`这一项，因此最终结果`phi[i] * (primes[j] - 1)`。 |
+|     |                                                                                                                                                                                                                                                                                |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+|     | 质数i的欧拉函数即为<code>phi[i] = i - 1</code>：1 ~ i-1均与i互质，共i-1个。                                                                                                                                                                                                    |
+|     | <code>phi[primes[j] * i]</code>分为两种情况：                                                                                                                                                                                                                                  |
+|     | ① `i % primes[j] == 0`时：`primes[j]`是<code>i</code>的最小质因子，也是<code>primes[j] * i</code>的最小质因子，因此<code>1 - 1 / primes[j]</code>这一项在<code>phi[i]</code>中计算过了，只需将基数N修正为<code>primes[j]</code>倍，最终结果为<code>phi[i] * primes[j]</code>。 |
+|     | ② <code>i % primes[j] != 0</code>：<code>primes[j]</code>不是<code>i</code>的质因子，只是<code>primes[j] * i</code>的最小质因子，因此不仅需要将基数N修正为`primes[j]`倍，还需要补上`1 - 1 / primes[j]`这一项，因此最终结果`phi[i] * (primes[j] - 1)`。                         |
 ```c
                                                  |int primes[N], cnt;     // primes[]存储所有素数
 int euler[N];           // 存储每个数的欧拉函数
@@ -760,7 +818,7 @@ mat nul(mat &A, mat &B)
 ```
 
 ## 裴蜀定理
-a*x + b*y =  gcd(a, b)
+a*x + b*y =  gcd(a, b) 一定有整数解
 
 
 ## 高斯消元求解线性方程组
@@ -780,7 +838,18 @@ for (int i = 0; i < N; i++)
         else c[i][j] = (c[i - 1][j] + c[i - 1][j - 1]) % mod;
     }
 ```
-
+```c++
+int c[2003][2003];
+void init()
+{
+    for (int i = 0; i < 2003; i++)
+    for (int j = 0; j <= i; j++)
+    {
+        if (!j ) c[i][j]  =1;
+        else c[i][j] = (c[i-1][j] + c[i-1][j-1])%mod;
+    }
+}
+```
 ### 通过预处理逆元的方式求组合数
 
 首先预处理出所有阶乘取模的余数`fact[N]`，以及所有阶乘取模的逆元`infact[N]`
@@ -789,7 +858,7 @@ for (int i = 0; i < N; i++)
 
 数据范围：$1 \leq a \leq b \leq 1e5$
 
-```c
+```c++
 int qmi(int a, int k, int p) // 快速幂模板
 {
     int res = 1;
@@ -808,6 +877,11 @@ for (int i = 1; i < N; i++)
     fact[i] = (LL) fact[i-1] * i % mod;
     infact[i] = (LL)infact[i - 1] * qmi(i, mod - 2, mod) % mod;
 }
+
+
+        int a, b;
+        scanf("%d%d", &a, &b);
+        printf("%d\n", (LL)fact[a] * infact[b] % mod * infact[a - b] % mod);
 ```
 
 ### Lucas（卢卡斯）定理
@@ -817,35 +891,105 @@ Lucas定理最大的数据处理能力是p在10^5左右，不能再大了
 
 https://ac.nowcoder.com/acm/contest/4381/B
 
+```c++
+int p; 
+int qmi(int a, int b){
+    int res = 1;
+    while (b){
+        if(b &1)
+            res = (ll)res*a%p;
+        a = (ll)a*a%p;
+        b >>= 1;
+    }
+    return res;
+}
+int C(ll a, ll b){
+    ll res = 1;
+    for(int j = 1, i = a; j <= b; i--,j++){
+        res = (ll)res* i%p;
+        res = (ll)res*qmi(j, p-2)%p;
+    }
+    return res;
+}
 
-### 卡特兰数 
 
+int lucas(ll a, ll b){
+    if(a < p && b < p)
+        return C(a, b);
+    return (ll)C(a%p,b%p) * lucas(a/p, b/p) % p;
+}
+int main(){
+    int t;
+    ll a, b;
+    cin >> t;
+    while (t--){
+        scanf("%lld %lld %d", &a, &b, &p);
+        printf("%lld\n", lucas(a, b));
+    }
+    
+    
+```
+### 大数组合数
 
+```c++
+int const N = 50010;
+int prime[N];
+bool st[N];
+int sum[N];
+int cnt = 0;
+void get_primes(int n){
+   
+    for (int i = 2; i <= n; i++){
+        if(!st[i]) prime[cnt++] = i;
+        for(int j = 0; prime[j] <= n/i; j++){
+            st[prime[j]*i] = true;
+            if(i % prime[j] == 0)
+                break;
+        }
+    }
+}
+int get(int n, int p){
+    int res = 0;
+    while (n){
+        res += n/p;
+        n /= p;
+    }
+    return res;
+}
+vector<int> mul(vector<int> a, int b){
+    vector<int> c;
+    int t = 0;
+    for(int i = 0; i < a.size(); i++){
+        t += a[i]*b;
+        c.push_back(t%10);
+        t /= 10;
+    }
+    while(t){
+        c.push_back(t%10);
+        t /= 10;
+    }
+    return c;
+}
 
-## 容斥原理
+void C(int a,int b)
+{
+    get_primes(a);
+    
+    for(int i = 0; i < cnt; i++){
+        int p = prime[i];
+        sum[i] = get(a, p) - get(b,p) - get(a-b, p);
+    }
+    vector<int> res;
+    res.push_back(1);
+    for(int i = 0; i < cnt; i++)
+        for(int j = 0; j < sum[i]; j++)
+            res = mul(res, prime[i]);
+    for(int k = res.size()-1; k >= 0; k--)
+        printf("%d",res[k]);
+}
 
-## 抽屉原理
+```
 
-## 多项式
-
-### 秦九韶定理
-
-$p(x)= 2x^4 - x^3+3 x^2 + x – 5$
-
-​    $= x(2x^3 – x^2+3 x + 1) – 5$
-
-​    $= x(x(2x^2 – x+3 ) + 1) – 5$
-
-​    $= x(x(x(2x – 1)+3 ) + 1) – 5$
-
-
-### 本原多项式
-1. 设$f(x) = a_0 + a_1x + a_2x^2 + ...... + a_nx^n$是唯一分解整环D上的多项式，如果$gcd(a_0, a_1, ..., a_n) = 1$, 则称$f(x)$为D上的一个本原多项式
-   * $f(x)$ 是既约的，即不能再分解因式；
-   * $f(x)$可整除$x^m + 1$, 这里的$m = 2^n - 1$;
-   * $f(x)$不能整除$x^q + 1$, 这里$q<m$.
-2. 定理
-   * 高斯引理：本原多项式的乘积还是本原多项式
 
 ## 函数求峰
 ### 函数单峰
@@ -884,6 +1028,182 @@ ll ef(ll l,ll r)//三分
         cout << ans << endl;
 ```
 
+## 组合数学
+### 加法原理
+- 把集合S划分成不太多的易于处理部分
+### 乘法原理
+- 是加法原理的推论
+### 减法原理
+### 除法原理
+
+让最有约束性的选择优先
+
+### 圆排列
+- 圆排列：从n个中取r个的圆排列的排列数为 `P(n,r)/r , 2<=r<=n` 剪刀剪圆，有r种剪法， 所以除r
+
+### 项链排列 
+- 与圆排列的不同的是，他是立体的，圆排列是平面的，它可以翻转，所以结果是圆排列/2 `P(n,r)/2r , 3<=r<=n`
+### 无重组合
+
+### 可重组合
+- 隔板法：将隔板放进去进行无重组合
+- 从n种水果中选r个拼果篮 C(n+r-1, r);
+
+### 可重排列
+- n个字母组成r位串
+### 不相邻组合
+- 不相邻的组合是指从集合A={1,2,...,n} 中取出r个不相邻的数字进行组合（不可重），即不存在相邻的两个数j,j+1的组合。
+- 这个组合与从(n-r+1)个元素中取r个进行无重组合一一对应，其组合数为C(n-r+1,r)
+  
+### 多重全排列
+- r1个a, r2个b组成的n位串 `n!/(r1!*r2!)`;
+
+### 全排类算法
+- 全排列的生成算法就是从第一个排列开始逐个生成所有的排列的方法
+
+字典序算法
+- 每个排列的后继都可以从它的前驱经过最少的变化而得到
+- 从右往左，找到第一次下降的位置，后缀中比当前位置大的最小数字进行交换，后缀最小
+
+#### 字典序法
+-  保持尽可能长的共同前缀，变化限制在尽可能短的后缀上
+#### SJT算法
+
+#### STL
+
+```c++
+int main(int argc, char** argv) {
+	int a[4]={1,2,3,4};
+	sort(a,a+4);
+	do{
+		//cout<<a[0]<<" "<<a[1]<<" "<<a[2]<<" "<<a[3]<<endl;
+		for(int i=0;i<4;i++)
+		    cout<<a[i]<<" ";
+		cout<<endl;
+	}while(next_permutation(a,a+4));
+	return 0;
+   
+
+```
+
+### 母函数
+- 计数工具
+- 不考虑收敛性
+- 不考虑实际上的数值
+- 形式幂级数
+
+对于记数序列
+$C_0, C_1, C_2...函数G(x) = c_0 + c_1x + c_2x^2 + ...$称G(x)为序列$c_0$, $c_1$, $c_2$...的母函数
+#### 砝码母函数
+$G(x) = \frac{(1+x)}{(1+x^2)}*(1+x^3)*(1+x^4)$
+
+1 ,2 ,4, 8, 16, 32
+
+$G(x) = (1+x)*(1+x^2)*(1+x^4)*(1+x^8)*(1+x^{16})*(1+x^{32})$
+     $= \frac{(1-x^2)}{1-x}*\frac{(1-x^4)}{1-x^2}*\frac{(1-x^8)}{1-x^4}*\frac{(1-x^{16})}{1-x^8}*\frac{(1-x^{32})}{1-x^{16}}*\frac{(1-x^{64})}{1-x^{32}}$
+     $= \frac{1-x^{64}}{1-x}$
+     $=(1+x+x^2+...+x{63})$
+     $= \sum_{k = 0}^{63}x^k$
+
+#### 整数拆分
+
+##### 有序拆分
+```
+把自然数n拆成r个自然数之和，它的方案数为C(n-1, r-1), // 用插板法，在n-1个间隙里插r-1个板
+```
+##### 无序拆分
+
+把一个整数分解成若干整数的和，相当于把n个无区别的球放到r个无标志的盒子，盒子允许空着，有多少种方法，就意味着整数拆分数有多少
+
+$1 + x + x^2 + .... = \frac{1}{1-x}$
+
+无序拆分数p(n )
+
+### fibonacci数列
+
+
+
+### 卡特兰数 
+
+
+
+### 容斥原理
+
+### 抽屉原理
+
+### 多项式
+
+## 置换群
+### 置换
+[1,n]到自身的1-1映射称为n阶置换
+[1,n]上的多个置换组成的集合在乘法顶一下构成一个群，则称为置换群
+
+在群中不满足交换律，但是满足结合律
+* 封闭性
+* 可结合性
+* 有单位元  
+* 逆元
+
+### 循环
+### 循环节
+```c++
+signed main()
+{
+    STDIN
+    int n; cin >> n;
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    int q = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        if (!st[a[i]])
+        {
+            int t = a[i];
+            int cnt = 0;
+            while (!st[t])
+            {
+                cnt++;
+                st[t] = true;
+                t = a[t];
+            }
+            xh[q++] = cnt;
+        }
+    }
+    int ans = 1;
+    for (int i = 0; i < q; i++)
+    {
+        ans = lcm(ans, xh[i]);
+    }
+    cout << ans << endl;
+}
+```
+## 对换
+
+若$p = (a_1a_2a_3....a_n)$则p^n = (1)(2)...(n) = e
+
+(1 2 .... n) = (1 2)(1 3)...(1 n)
+
+(1 2 ... n) = (2 3)(2 4)...(2 n)(2 1)
+
+### 奇偶置换 
+
+### 秦九韶定理
+
+$p(x)= 2x^4 - x^3+3 x^2 + x – 5$
+
+​    $= x(2x^3 – x^2+3 x + 1) – 5$
+
+​    $= x(x(2x^2 – x+3 ) + 1) – 5$
+
+​    $= x(x(x(2x – 1)+3 ) + 1) – 5$
+
+
+### 本原多项式
+1. 设$f(x) = a_0 + a_1x + a_2x^2 + ...... + a_nx^n$是唯一分解整环D上的多项式，如果$gcd(a_0, a_1, ..., a_n) = 1$, 则称$f(x)$为D上的一个本原多项式
+   * $f(x)$ 是既约的，即不能再分解因式；
+   * $f(x)$可整除$x^m + 1$, 这里的$m = 2^n - 1$;
+   * $f(x)$不能整除$x^q + 1$, 这里$q<m$.
+2. 定理
+   * 高斯引理：本原多项式的乘积还是本原多项式
 ### 多重集合排列组合问题
 设多重集合 S = { n1 * a1, n2 * a2, ..., nk * ak },n = n1 + n2 + ... + nk, 
 
@@ -895,9 +1215,52 @@ ll ef(ll l,ll r)//三分
 
 由公式可以看出多重集合的组合只与类别数k 和选取的元素r 有关，与总数无关！
 
+### n 进制 转换
+```c++
+int n;
+char z[10]={'0','1','2','3','4','5','6','7','8','9'};
 
+string turn(int x)
+{
+    string a="";
+    while(x)a=z[x%n]+a,x/=n;
+    return a;    
+}
+```
 ## 数据结构
 
+### 单调栈
+```c++
+const int N = 1e5 + 10;
+int skt[N];
+int cnt = 0;
+
+int main()
+{
+    int n; cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        int t; cin >> t;
+        while(cnt && skt[cnt] >= t) cnt--;
+        if (!cnt) printf("-1 ");
+        else printf("%d ", skt[cnt]);
+        skt[++cnt] = t; 
+    }
+    puts("");
+    return 0;
+}
+```
+### 单调队列
+```c++
+// 常见模型：找出滑动窗口中的最大值/最小值
+int hh = 0, tt = -1;
+for (int i = 0; i < n; i ++ )
+{
+    while (hh <= tt && check_out(q[hh])) hh ++ ;  // 判断队头是否滑出窗口
+    while (hh <= tt && check(q[tt], i)) tt -- ;
+    q[ ++ tt] = i;
+}
+```
 ### 单链表
 ```c++
 // head存储链表头，e[]存储节点的值，ne[]存储节点的next指针，idx表示当前用到了哪个节点
@@ -1011,30 +1374,132 @@ for (int i = 1; i <= n; i ++ )
     stk[ ++ tt] = i;
 }
 ```
+
+## 二叉堆
+```c++
+const int MAXSIZE = 100000; // 二叉堆大小
+
+struct BinaryHeap {
+    int heap[MAXSIZE], id[MAXSIZE], pos[MAXSIZE], n, counter;
+
+    BinaryHeap() :n(0), counter(0){}
+    BinaryHeap(int array[], int offset) :n(0), counter(0){
+        for (int i = 0; i < offset; ++i) {
+            heap[++n] = array[i];
+            id[n] = pos[n] = n;
+        }
+        for (int i = n/2; i >= 1; --i){
+            down(i);
+        }
+    }
+
+    void push(int v) { // 插入键值 v
+        heap[++n] = v;
+        id[n] = ++counter;
+        pos[id[n]] = n;
+        up(n);
+    }
+
+    int top() {
+        return heap[1];
+    }
+    int pop() { // 删除堆顶元素
+        swap(heap[1], heap[n]);
+        swap(id[1], id[n--]);
+        pos[id[1]] = 1;
+        down(1);
+        return id[n+1];
+    }
+
+    int get(int i) {    // 获取第i个插入堆中的元素值
+        return heap[pos[i]];
+    }
+
+    void change(int i, int value) { // 修改第i个元素
+        heap[pos[i]] = value;
+        down(pos[i]);
+        up(pos[i]);
+    }
+
+    void erase(int i) { // 删除第i个元素
+        heap[pos[i]] = INT_MIN;
+        up(pos[i]);
+        pop();
+    }
+
+    void up(int i) { // 将堆中位置为i的节点不断“上浮”
+        int x = heap[i], y = id[i];
+        for (int j = i/2; j >= 1; j/=2){
+            if (heap[j] > x) {
+                heap[i] = heap[j];
+                id[i] = id[j];
+                pos[id[i]] = i;
+                i = j;
+            }else {
+                break;
+            }
+        }
+        heap[i] = x;
+        id[i] = y;
+        pos[y] = i;
+    }
+
+    void down(int i) {
+        int x = heap[i], y = id[i];
+        for (int j = i*2; j <= n; j *= 2) {
+            j += j < n && heap[j] > heap[j+1];
+            if (heap[j] < x) {
+                heap[i] = heap[j];
+                id[i] = id[j];
+                pos[id[i]] = i;
+                i = j;
+            } else {
+                break;
+            }
+        }
+        heap[i] = x;
+        id[i] = y;
+        pos[y] = i;
+    }
+    
+    bool empty() {
+        return n == 0;
+    }
+
+    int size() {
+        return n;
+    }
+}
+```
 ## Trie
 
 ### Trie字符串统计
 
 ```c++
-int son[N][26], cnt[N], idx;
-char str[N];
+#include<iostream>
+#include<cstdio>
+using namespace std;
 
+const int N = 100010;
+
+int son[N][26], cnt[N], idx;
+
+char str[N];
 void insert(char *str)
 {
     int p = 0;
-    for (int i = 0; str[i]; i ++ )
+    for (int i = 0; str[i]; i++)
     {
         int u = str[i] - 'a';
-        if (!son[p][u]) son[p][u] = ++ idx;
+        if (!son[p][u]) son[p][u] = ++idx;
         p = son[p][u];
     }
-    cnt[p] ++ ;
+    cnt[p]++;
 }
-
 int query(char *str)
 {
     int p = 0;
-    for (int i = 0; str[i]; i ++ )
+    for (int i = 0; str[i]; i++)
     {
         int u = str[i] - 'a';
         if (!son[p][u]) return 0;
@@ -1042,11 +1507,104 @@ int query(char *str)
     }
     return cnt[p];
 }
+int main()
+{
+    int n; cin >> n;
+    while (n--)
+    {
+        char op[2];
+        scanf("%s %s", op, str);
+        if (*op == 'I') insert(str);
+        else printf("%d\n", query(str));
+    }
+    return 0;
+}
+```
 
+### 最大异或对
+```c++
+const int N = 100010, M = 3000000;
 
+int n, a[N], son[M][2], idx;
+
+void insert(int x)
+{
+    int p = 0;
+    for (int i = 30;  i>= 0; i--)
+    {
+        int &s = son[p][x>>i&1];
+        if (!s) s = ++idx;
+        p = s;
+    }
+}
+
+int search(int x)
+{
+    int p = 0, res = 0;
+    for (int i = 30; i >= 0; i--)
+    {
+        int s = x >> i & 1;
+        if (son[p][!s])
+        {
+            res += 1 << i;
+            p = son[p][!s];
+        }
+        else p = son[p][s];
+    }
+    return res;
+}
+
+int main()
+{
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++)
+    {
+        scanf("%d", &a[i]);
+        insert(a[i]);
+    }
+    int res = 0;
+    for (int i = 0; i < n; i++) res = max(res, search(a[i]));
+    printf("%d\n", res);
+    return 0;
+}
 ```
 
 ## 堆
+
+### 堆模板
+```c++
+void swap(int &x,int &y){int z=x;x=y;y=z;}
+struct small_root_heap{
+    int heap[M],top;
+    void insert(int x){heap[++top]=x;int t=top;while(t>1&&heap[t]<heap[t>>1])swap(heap[t],heap[t>>1]),t>>=1;}
+    void pop()
+    {
+        int t=2;
+        heap[1]=heap[top];heap[top--]=0;
+        while(t<=top)
+        {5
+            if(heap[t]>heap[t+1]&&t<top)t++;
+            if(heap[t]<heap[t>>1])swap(heap[t],heap[t>>1]),t<<=1;
+            else break;
+        }
+    }
+};
+struct big_root_heap{
+    int heap[M],top;
+    void insert(int x){heap[++top]=x;int t=top;while(t>1&&heap[t]>heap[t>>1])swap(heap[t],heap[t>>1]),t>>=1;}
+    void pop()
+    {
+        int t=2;
+        heap[1]=heap[top];heap[top--]=0;
+        while(t<=top)
+        {
+            if(heap[t]<heap[t+1]&&t<top)t++;
+            if(heap[t]>heap[t>>1])swap(heap[t],heap[t>>1]),t<<=1;
+            else break;
+        }
+    }
+};
+```
 ### 堆排序
 ```c++
 const int N = 100010;
@@ -1216,50 +1774,78 @@ ULL get(int l, int r)
 }
 
 ```
+## 序列自动机
+1. nxt[i][j]表示i以后的第一个字符j的位置，0为根节点，整个图是一个DAG
+2. 用于求是否存在某个子序列
 
+```c++
+const int N = 1e6 + 10;
+int ne[N][30];
+char s[N];
+char t[N];
+int n,q;
+void init()
+{
+    for (int i = 0; i < 26; i++) ne[n+1][i] = n+1;
+    for (int i = n; i; i--)
+    {
+        for (int j = 0; j < 26; j++) ne[i][j] = ne[i+1][j];
+        ne[i][s[i] - 'a'] = i;
+    }
+}
+signed main()
+{
+    //STDIN
+    cin >> n >> q;
+    scanf("%s", s+1);
+    init(); // 初始化
+    while(q--)
+    {
+        scanf("%s", t + 1);
+        int now = 1;bool flag = true;
+        for (int i = 1; t[i]; ++i)
+        {
+            if (ne[now][t[i] - 'a'] > n){
+                flag = false;
+                break;
+            }
+            else now = ne[now][t[i] - 'a'] + 1;
+        }
+        if (flag) puts("YES");
+        else puts("NO");
+    }
+    return 0;
+}
+```
 ## 并查集
+* 难点在于带边权的并查集，合并时对于边权的处理。
 ### 整数并查集
 
 ```c++
-int par[MAX_N]; //父亲
-int rank[MAX_N]; //树的高度
+struct DisjointSet {
+    std::vector<int> father, rank;
+    DisjointSet(int n) : father(n), rank(n) {
+        for (int i = 0; i < n; i++) {
+            father[i] = i;
+        }
+    }
 
-//初始化n个元素
-void init(int n) {
-	for (int i = 0; i < n; i++)
-	{
-		par[i] = i;
-		rank[i] = 0;
-	}
-}
+    int find(int v) {
+        return father[v] = father[v] == v ? v : find(father[v]);
+    }
 
-// 查询树的根
-int find(int x) {
-	if (par[x] == x)
-	{
-		return x;
-	}
-	else
-	{
-		return par[x] = find(par[x]); //将他们全部直接连在根上。
-	}
-}
-
-//合并x和y所属的集合
-void unite(int x, int y)
-{
-	x = find(x);
-	y = find(y);
-	if(x == y) return ;
-	if (rank[x] < rank[y])
-	{
-		par[x] = y;
-	}
-	else {
-		par[y] = x;
-		if (rank[x] == rank[y]) rank[x]++;
-	}
-}
+    void merge(int x, int y) {
+        int a = find(x), b = find(y);
+        if (rank[a] < rank[b]) {
+            father[a] = b;
+        } else {
+            father[b] = a;
+            if (rank[b] == rank[a]) {
+                ++rank[a];
+            }
+        }
+    }
+};
 
 ```
 ### 字符串并查集
@@ -1418,10 +2004,178 @@ long long sum(int x,int y,int z,int xx,int yy,int zz)
 }
 
 ```
+### 左偏树
+```c++
+// tot 为添加过的节点个数，maxn 为最多节点数
+const int maxn = 100000;
+int tot, v[maxn], l[maxn], r[maxn], d[maxn];
 
+int Merge(int x, int y) {
+    if (!x) return y;
+    if (!y) return x;
+    if (v[x]<v[y]) swap(x, y);
+    r[x] = Merge(r[x], y);
+    if (d[l[x]] < d[r[x]])
+        swap(l[x], r[x]);
+    d[x] = d[r[x]] + l;
+    return x;
+}
+
+int Init(int x) {
+    tot++;
+    v[tot] = x;
+    l[tot] = r[tot] = d[tot] = 0;
+}
+
+int Insert(int x, int y) { 
+    return (Merge(x, Init(y)));
+}
+
+int Top(int x) { 
+    return (v[x]);
+}
+
+int Pop(int x){
+    return (Merge(l[x], r[x]));
+}
+```
+### 平衡树
+#### Treap
+```c++
+int N;
+const int maxNode = 2000000 + 10;
+struct Treap {
+    int32_t root, treapCnt, key[maxNode], priority[maxNode],
+    childs[maxNode][2], cnt[maxNode],size[maxNode];
+
+    Treap() {
+        root = 0;
+        treapCnt = 1;
+        priority[0] = INT32_MAX;
+        size[0] = 0;
+    }
+    
+    void update(int x) {
+        size[x] = size[childs[x][0]] + cnt[x] + size[childs[x][1]];
+    }
+/**
+ * 
+
+     y                               x
+    / \     Right Rotation          /  \
+   x   T3   - - - - - - - >        T1   y 
+  / \       < - - - - - - -            / \
+ T1  T2     Left Rotation            T2  T3
+
+ *
+ */
+
+    void rotate(int &x, int t){
+        int y = childs[x][t];
+        childs[x][t] = childs[y][1-t];
+        childs[y][1-t] = x;
+        update(x);
+        update(y);
+        x = y;
+    }
+
+    void __insert(int &x, int k) {
+        if (x) {
+            if (key[x] == k) {
+                cnt[x]++;
+            }else{
+                int t = key[x] < k;
+                __insert(childs[x][t], k);
+                if (priority[childs[x][t]] < priority[x]){
+                    rotate(x,t);
+                }
+            }
+            
+        } else{
+            x = treapCnt++;
+            key[x] = k;
+            cnt[x] = 1;
+            priority[x] = rand();
+            childs[x][0] = childs[x][1] = 0;
+        }
+        update(x);
+    }
+
+    void __erase(int &x, int k) {
+        if (key[x] == k) {
+            if (cnt[x] > 1) {
+                cnt[x]--;
+            }else{
+                if (childs[x][0] == 0 && childs[x][1] == 0){
+                    x = 0;
+                    return;
+                }
+                int t = priority[childs[x][0]] > priority[childs[x][1]];
+                rotate(x, t);
+                __erase(x, k);
+            }
+        } else{
+            __erase(childs[x][key[x] < k], k);
+        }
+        update(x);
+    }
+
+    int __getKth(int &x, int k) {
+        if (k <= size[childs[x][0]]){
+            return __getKth(childs[x][0], k);
+        }
+        k -= size[childs[x][0]] + cnt[x];
+        if (k <= 0) {
+            return key[x];
+        }
+        return __getKth(childs[x][1], k);
+    }
+
+
+    int __get_rank (int &x, int k) {
+        if (!x) return 1;
+        if (key[x] == k) return size[childs[x][0]] + 1;
+        if (key[x] > k) return __get_rank(childs[x][0], k);
+        return size[childs[x][0]] + cnt[x] + __get_rank(childs[x][1], k);
+    }
+    int __get_next(int &x, int k) {
+        if (!x) return INT32_MAX;
+        if (key[x]<=k) return __get_next(childs[x][1], k);
+        return min(__get_next(childs[x][0], k), key[x]);
+    }
+
+    int __get_prev(int &x, int k) {
+        if (!x) return INT32_MIN;
+        if (key[x] >= k) return __get_prev(childs[x][0], k);
+        return max(key[x], __get_prev(childs[x][1], k));
+    }
+    void insert(int k) { // 插入值为k的元素
+        __insert(root, k);
+    }
+    void erase(int k) { // 删除值为k的元素
+        __erase(root, k);
+    }
+    int getKth(int k) { // 查找第k大元素
+        return __getKth(root, k);
+    }
+    int get_next(int k) // 找到严格大于k 的最小数
+    {
+        return __get_next(root, k);
+    }
+    int get_prev(int k) // 找到严格小于k的最大值
+    {
+        return __get_prev(root, k);
+    }
+    // 通过数值查找排名
+    int get_rank(int k) {
+        return __get_rank(root, k);
+    }
+};
+Treap F;
+```
 ### 分块
 例题poj3468
-```
+```c++
 const int N = 1e5 + 10;
 
 int a[N], sum[N], add[N];
@@ -1517,6 +2271,10 @@ signed main()
 }
 ```
 ## 图论
+### 结论
+
+1. 无根树上的某点到经过所有点最短路径即为：所有路径的长度乘二-最长链即可。
+2. 
 ### 树与图的存储
 树是一种特殊的图，与图的存储方式相同。
 对于无向图中的边ab，存储两条有向边a->b, b->a。
@@ -1600,6 +2358,25 @@ void bfs()
             }
         }
     }
+}
+```
+
+### dfs序
+```c++
+bool st[N];
+int a[N]; // a数组用来存储dfs序
+int m;
+void dfs(int u)
+{
+    a[++m] = u;
+    st[u] = true;
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        if (st[j]) continue;
+        dfs(j);
+    }
+    a[++m] = u;
 }
 ```
 ### 树的重心
@@ -1717,6 +2494,7 @@ int main()
         }
     }
     memset(st, false, sizeof st);
+    memset(dis, 0,sizeof dis);
     dfs(j, 0);
     maxn = -1;
     j = -1;
@@ -1987,8 +2765,39 @@ bool check()
 }
 
 ```
+### 拓扑排序
+```c++
+bool topsort()
+{
+    int hh = 0, tt = -1;
 
+    // d[i] 存储点i的入度
+    for (int i = 1; i <= n; i++)
+        if (!d[i])
+            q[++tt] = i;
+
+    while (hh <= tt)
+    {
+        int t = q[hh++];
+
+        for (int i = h[t]; i != -1; i = ne[i])
+        {
+            int j = e[i];
+            if (--d[j] == 0)
+                q[++tt] = j;
+        }
+    }
+
+    // 如果所有点都入队了，说明存在拓扑序列；否则不存在拓扑序列。
+    return tt == n - 1;
+}
+```
 ### 二分图
+
+结论 一个图是二分图
+等价
+1. 图中不存在奇数环
+2. 染色  过程中不存在矛盾
 #### 染色法判别二分图
 
 树一定能够二分染色
@@ -2054,7 +2863,7 @@ void add(int a, int b, int c)
 
 void getrt(int u, int fa)
 {
-    Size[u] = 1;
+    Size[u] = 1; 
     maxp[u] = 0;
     for (int i = h[u]; ~i; i = ne[i])
     {
@@ -2240,6 +3049,118 @@ int main()
 }
 
 ```
+
+## 有向图的强连通分量
+有向图强连通分量：
+在有向图G中，如果两个顶点vi,vj间（vi>vj）有一条从vi到vj的有向路径，同时还有一条从vj到vi的有向路径，
+则称两个顶点强连通(strongly connected)。
+如果有向图G的每两个顶点都强连通，称G是一个强连通图。
+有向图的极大强连通子图，称为强连通分量
+
+树边，前向边，后向边，横叉边，应该说，不是一个图本身有的概念，应该是图进行DFS时才有的概念。
+图进行DFS会得到一棵DFS树（森林），在这个树上 才有了这些概念。
+对图进行DFS，可以从任意的顶点开始，遍历的方式也是多样的，所以不同的遍历会得到不同的DFS树，进而产生不同的树边，
+前向边，后向 边，横叉边。所以这4种边，是一个相对的概念。
+
+[板子题：最受欢迎的牛](https://www.luogu.com.cn/problem/P2341)
+```c++
+// Tarjan算法求强连通分量（scc）
+// 对每个点定义两个时间戳
+// dfn[u]表示遍历到u的时间戳
+// low[u]从u开始走，所能遍历到的最小时间戳是什么
+// u是其所在的强连通分量的最高点，等价于dfn[u] == low[u]
+
+const int N = 10010, M = 50010;
+
+int n, m;
+
+int h[N], e[M], ne[M], idx;
+int dfn[N], low[N], timestamp;
+int stk[N], top;
+
+bool in_stk[N];
+int id[N], scc_cnt, Size[N];
+int dout[N];
+
+void add(int a, int b){
+    e[idx] = b, ne[idx] = h[a], h[a] = idx++;
+}
+
+void tarjan(int u)
+{
+    dfn[u] = low[u] = ++ timestamp;
+    stk[++ top] = u, in_stk[u] = true;
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        if (!dfn[j])
+        {
+            tarjan(j);
+            low[u] = min(low[u], low[j]);
+        }
+        else if (in_stk[j]) low[u] = min(low[u], dfn[j]);
+    }
+    
+    if (dfn[u] == low[u])
+    {
+        ++ scc_cnt;
+        int y;
+        do {
+            y = stk[top--];
+            in_stk[y] = false;
+            id[y] = scc_cnt;
+            Size[scc_cnt]++;
+        }while(y != u);
+    }
+}
+int main()
+{
+    scanf("%d%d", &n, &m);
+    memset(h, -1, sizeof h);
+    while(m--)
+    {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        add(a, b);
+    }
+    
+    for (int i = 1; i <= n; i++)
+    {
+        if (!dfn[i])
+        {
+            tarjan(i);
+        }
+    }
+    
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = h[i]; ~j; j = ne[j])
+        {
+            int k = e[j];
+            int a = id[i], b = id[k];
+            if (a != b) dout[a]++;
+        }
+    }
+    int zeros = 0, sum = 0;
+    for (int i = 1; i <= scc_cnt; i++)
+    {
+        if (!dout[i])
+        {
+            zeros++;
+            sum+=Size[i];
+            if (zeros>1){
+                sum = 0;
+                break;
+            }
+        }
+    }
+    printf("%d\n", sum);
+    return 0;
+}
+```
+## 无向图的双连通分量
+1. 边的双连通分量 e-DCC （不含有桥，不管删掉哪条边，整个图还是联通的）
+2. 点的双连通分量 V-DCC （���大的不包含割点的连通块    ）
 ## 动态规划
 
 ### 背包问题
@@ -2273,6 +3194,8 @@ int main()
 
 
 #### 完全背包问题
+
+- 无限用
 
 1. 最初版本
 
@@ -2329,7 +3252,7 @@ int main()
            s-=t;
            t <<= 1;
        }
-       while (s)
+       if (s > 0)
        {
            cnt++;
            v[cnt] = s*a; w[cnt] = s*b;
@@ -2343,10 +3266,136 @@ int main()
        }
    }
    ```
+### 混合被告问题
+```c++
+int n, m;
+int f[N];
 
+int main()
+{
+    cin >> n >> m;
+
+    for (int i = 0; i < n; i ++ )
+    {
+        int v, w, s;
+        cin >> v >> w >> s;
+        if (!s)
+        {
+            for (int j = v; j <= m; j ++ )
+                f[j] = max(f[j], f[j - v] + w);
+        }
+        else
+        {
+            if (s == -1) s = 1;
+            for (int k = 1; k <= s; k *= 2)
+            {
+                for (int j = m; j >= k * v; j -- )
+                    f[j] = max(f[j], f[j - k * v] + k * w);
+                s -= k;
+            }
+            if (s)
+            {
+                for (int j = m; j >= s * v; j -- )
+                    f[j] = max(f[j], f[j - s * v] + s * w);
+            }
+        }
+    }
+
+    cout << f[m] << endl;
+
+    return 0;
+}
+
+```
+### 二维费用背包问题
+#### 01背包
+```c++
+#include<iostream>
+#include<algorithm>
+using namespace std;
+
+int n, V, M;
+const int N = 1000;
+int dp[N][N];
+int main()
+{
+    cin >> n >> V >> M;
+    for (int i = 1; i <= n; i++)
+    {
+        int v, w, m;
+        cin >> v >> m >> w;
+        for (int j = V; j >= v; j--)
+        {
+            for (int k = M; k >= m; k--)
+            {
+                dp[j][k] = max(dp[j][k],dp[j-v][k-m] + w);
+            }
+        }
+    }
+    cout << dp[V][M] << endl;
+}
+```
+
+#### 至少
+```c++
+int f[N][N];
+int n, m, k;
+int main()
+{
+    cin >> n >> m >> k;
+    memset(f, 0x3f, sizeof f);
+    f[0][0] = 0;
+    for (int i = 1; i <= k; i++)
+    {
+        int v1, v2 , w;
+        cin >> v1 >> v2 >> w;
+        for (int i = n; i >= 0; i--)
+        {
+            for (int j = m; j >= 0; j--)
+            {
+                f[i][j] = min(f[i][j], f[max(0, i - v1)][max(0, j - v2)] + w);
+            }
+        }
+    }
+    cout << f[n][m] << endl;
+}
+```
+#### 分组背包问题
+```c++
+
+```
 ### 线性dp
 https://ac.nowcoder.com/acm/contest/3006/F *已解决*
 
+#### 最长上升子序列升级版
+```c++
+const int N = 1e5 + 10;
+
+int a[N];
+int q[N];
+
+int main()
+{
+    int n; cin >> n;
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    
+    int len = 0;
+    q[0] = -2e9;
+    for (int i = 1; i <= n; i++)
+    {
+        int l = 0, r = len;
+        while (l < r)
+        {
+            int mid = l + r + 1 >> 1;
+            if (q[mid] < a[i]) l = mid;
+            else r = mid - 1;
+        }
+        len = max(len, r + 1);
+        q[r+1] = a[i];
+    }
+    cout << len << endl;
+}
+```
 #### 动态规划求M字段和问题
 【问题描述】----最大M子段和问题
 给定由 n个整数（可能为负整数）组成的序列a1，a2，a3，……，an，以及一个正整数 m，要求确定序列 a1，a2，a3，……，an的 m个不相交子段，
@@ -2381,7 +3430,7 @@ https://ac.nowcoder.com/acm/contest/3006/F *已解决*
 ```c++
 // 令x_{i}x 
 令x表示字符串SS遍历到位置ii,与字符串X=匹配的最大长度。
-for(int i=1;i<=n;i++)
+    for(int i=1;i<=n;i++)
     {
         if(s[i]==a[x]) x++;
     }
@@ -2392,7 +3441,7 @@ for(int i=1;i<=n;i++)
 dp
 
 ```c++
-for (int i = 0; i < s.length(); ++i)
+    for (int i = 0; i < s.length(); ++i)
     {
         dp[3] = (dp[3] + (s[i] == 'o')*dp[2]) %mod;
         dp[2] = (dp[2] + (s[i] == 'l')*dp[1]) %mod;
@@ -2427,8 +3476,8 @@ $w = (y + [\frac{y}{4}] -c+ [\frac{26*(m + 1)}{10}] + d +4)\%7$
 
 ## c++STL
 
-```c
-vector, 变长数组，倍增的思想
+```c++
+    vector, 变长数组，倍增的思想
     size()  返回元素个数
     empty()  返回是否为空
     clear()  清空
@@ -2444,19 +3493,24 @@ pair<int, int>
     支持比较运算，以first为第一关键字，以second为第二关键字（字典序）
 
 string，字符串
+
+    string s4(n,'c');   将s4 初始化为字符'c'的n个副本
     size()/length()  返回字符串长度
     empty()
     clear()
     substr(起始下标，(子串长度))  返回子串
     c_str()  返回字符串所在字符数组的起始地址
 
-    
+
+​    
     string &insert(int pos, const char *s);
     string &insert(int pos, const string &s);
     //前两个函数在pos位置插入字符串s
     string &insert(int pos, int n, char c);  //在pos位置 插入n个字符c
     
     string &erase(int pos=0, int n=npos);  //删除pos开始的n个字符，返回修改后的字符串
+    
+    transform(s.begin(), s.end(), s.begin(), ::tolower); // 全部变小写
 
 queue, 队列
     size()
@@ -2523,25 +3577,26 @@ set, map, multiset, multimap, 基于平衡二叉树（红黑树），动态维�
 unordered_set, unordered_map, unordered_multiset, unordered_multimap, 哈希表
     和上面类似，增删改查的时间复杂度是 O(1)
     不支持 lower_bound()/upper_bound()， 迭代器的++，--
-
-### bitset, 圧位
+```
+### bitset, 圧位2
+```c++
     bitset<10000> s;
     ~, &, |, ^
     >>, <<
     ==, !=
     []
-
+    
     count()  返回有多少个1
-
+    
     any()  判断是否至少有一个1
     none()  判断是否全为0
-
+    
     set()  把所有位置成1
     set(k, v)  将第k位变成v
     reset()  把所有位变成0
     flip()  等价于~
     flip(k) 把第k位取反
-​```c++
+
     // 构造 
     bitset<4> bitset1;　　//无参构造，长度为４，默认每一位为０
 
@@ -2620,7 +3675,7 @@ unordered_set, unordered_map, unordered_multiset, unordered_multimap, 哈希表
     cout << s << endl;　　//10011011
     cout << a << endl;　　//155
     cout << b << endl;　　//155
-```
+
 
 list 
     list<int>a{1,2,3}
@@ -2643,61 +3698,92 @@ list
 ```
 ## 计算几何
 
+### 格点
 
+#### 求圆上格点数
+半径为R，对$R^2$进行质因数分解
+$R^2 = p_1^{c_1} *   p_2^{c_2} * ... *p_k^{c_k}$
+在$p^s$中，
+- 如果$p = 2$对格点数不影响
+- 若$p = 4*n+1$ 并且`s&1` 那么格点数为0，若为`s&1==0` `ans = ans*1`;
+- 若$p = 4*n+3$ `ans = ans*(s+1)`;
+
+```c++
+int PointOnCircle(int r)
+{
+    int ans = 4;
+    int x = r*r;
+    for (int i = 2; i <= x / i; i ++ )
+        if (x % i == 0)
+        {
+            int s = 0;
+            while (x % i == 0) x /= i, s ++ ;
+            if ((i-3)%4 == 0)
+                if (s&1) {ans = 0;break;}
+            if ((i-1)%4 == 0) ans *=s+1;
+        }
+    if (x > 1) {
+        if ((x-3)%4 == 0) ans = 0;
+        if ((x-1)%4 == 0) ans *=2;
+    }
+    return ans;
+}
+```
+#### 求圆内格点数
 ### 凸包
 #### Andrw_algorithm
 ​```c++
-struct vec
+struct Point
 {
     double x, y;
-    bool operator < (const vec & W)const
+    Point() {}
+    Point(double x, double y) : x(x), y(y) {}
+    Point operator-(Point a)
     {
-        if (x != W.x)
-            return x < W.x;
-        return y < W.y;
+        return Point(x - a.x, y - a.y);
     }
-}p[N];
-double Cross(vec A, vec B)
+} point[maxn];
+bool cmp(Point a, Point b)
 {
-    return A.x*B.y-A.y*B.x;
+    return a.x != b.x ? a.x < b.x : a.y < b.y;
 }
-double Side(vec a, vec b, vec p)
+Point Stack[maxn];
+double Cross(Point a, Point b)
 {
-    vec A = {b.x - a.x, b.y-a.y}; //  向量ab;
-    vec B = {p.x-a.x, p.y-a.y}; //向量ap;
-    return Cross(A, B);
+    return a.x * b.y - a.y * b.x;
 }
-
-double DistancePow(vec a, vec b)
+int ConvexHull(Point *p, int N, Point *S)
 {
-    return (a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y);
+    int cnt = 0;
+    for (int i = 1; i <= N; i++)
+    {
+        while (cnt >= 2 && Cross(S[cnt] - S[cnt - 1], p[i] - S[cnt - 1]) <= 0)
+            cnt--; // <,→ 就包括凸包上的点， <= 不包括凸包边上的点
+            S[++cnt] = p[i];
+    }
+    int k = cnt;
+    for (int i = N; i >= 1; i--)
+    {
+        while (cnt >= k + 2 && Cross(S[cnt] - S[cnt - 1], p[i] - S[cnt - 1]) <= 0)
+            cnt--;
+        S[++cnt] = p[i];
+    }
+    if (N > 1)
+        cnt--;
+    return cnt;
 }
-int n;
-vec st[N];
-int Andrew(int top) // 返回栈顶
+int main()
 {
-    sort(p+1, p+n+1);
-    if (n<3)
-    {
-        printf("-1\n");return -1;
-    }
-    st[1] = p[1], st[2] = p[2];
-    top = 2;
-    for (int i = 3; i <= n; i++) // 从p1 开始的下凸包
-    {
-        while(top>=2&&Side(st[top-1], st[top],p[i]) <= 0) top--;
-        st[++top] = p[i];
-    }
-    st[++top] = p[n-1];
-    for (int i = n-2; i >= 1; i--) // 从pn 开始的上凸包 注意这边i一定要到1，到2是错的
-    {
-        while (top >= 2 &&Side(st[top-1], st[top],p[i]) <= 0) top--;
-        st[++top] = p[i];
-    }
-    
-    return top;
+    cin>>N;
+    for (int i = 1; i <= N; i++)
+        scanf("%lf%lf", &point[i].x, &point[i].y);
+    sort(point + 1, point + 1 + N, cmp);
+    printf("%d", ConvexHull(point, N, Stack));
+    return 0;
 }
 ```
+
+
 ```c++
 /*///////////////////////////////////
 ***************Content***************
@@ -3330,85 +4416,112 @@ int main()
 
 ```
 
-## 其他算法
-### 粒子群优化算法
+### 圆心公式
 ```c++
-const int cnt=100;
-int n;
-double xs[15];//系数
-double l,r;//x的范围
-double f(double x) {//计算函数值
-    double y = 0;
-    for (int i=n+1; i>=1; i--) {
-        y+=xs[n-i+2]*pow(x,i-1);
-    }
-    return y;
-}
-double Rand() {
-    return (double)rand()/RAND_MAX;//返回一个[0,1]的随机实数
-}
-struct node {
-    double xv,x,y,besty,bestx;
-} b[105];
-//xv是速度向量，x是位置，y是当前位置的函数值，besty是该粒子历史最优值，bestx是该粒子历史最优值时的x的值 
+xx=((y[j]-y[i])*y[i]*y[j]-x[i]*x[i]*y[j]+x[j]*x[j]*y[i])/(x[j]*y[i]-x[i]*y[j])
+yy=((x[j]-x[i])*x[i]*x[j]-y[i]*y[i]*x[j]+y[j]*y[j]*x[i])/(y[j]*x[i]-y[i]*x[j])
 
-double by=-1e233,bx;
-//by是全局当前最优值，bbx是取到全局最优值时的自变量x
-
-void update(int a) {
-    //更新速度向量
-    //速度向量  惯性                 全局最优 局部最优  当前位置
-    b[a].xv=b[a].xv*0.5+Rand()*2*(bx+b[a].bestx-b[a].x*2);//更新公式
-
-    //通过速度向量更新位置
-    b[a].x+=b[a].xv;
-
-    //位置出界处理           速度向量方向反转
-    if (b[a].x<l) b[a].x=l,b[a].xv=b[a].xv*-1;
-    if (b[a].x>r) b[a].x=r,b[a].xv=b[a].xv*-1;
-
-    b[a].y=f(b[a].x);     //计算当前位置函数值
-    if (b[a].y>b[a].besty) { //更新局部最优解
-        b[a].bestx=b[a].x;
-        b[a].besty=b[a].y;
-    }
-}
-
-int main() {
-    scanf("%d%lf%lf",&n,&l,&r);
-    for (int i=1; i<=n+1; i++) {
-        scanf("%lf",&xs[i]);//读入系数 
-    }
-    srand(xs[1]+xs[n]);
-    //生成粒子
-    for (int i=1; i<=cnt; i++) {
-        //xv是速度向量，x是位置，y是当前位置的函数值，besty是该粒子历史最优值，bestx是该粒子历史最优值时的x的值 
-        b[i].x=b[i].bestx=l+Rand()*(r-l);//初始x的值 为 l~r 的一个实数 
-        b[i].xv=0;      //速度向量初始化为0
-        b[i].y=b[i].besty=f(b[i].x);    //计算当前函数值
-        if (by<b[i].y) { //若当前函数值优于全局最优函数值则更新全局最优
-            bx=b[i].bestx;
-            by=b[i].besty;
-        }
-    }
-    //开始迭代
-    for (int k=1; k<=100; k++) {
-        for (int i=1; i<=cnt; i++) {
-            //对每个粒子速度和位置更新
-            update(i);
-            if (by<b[i].besty) {
-                //更新全局最优解
-                bx=b[i].bestx;
-                by=b[i].besty;
-            }
-        }
-    }
-    printf("%.5lf\n",bx);//全局最优的x的值即为答案
-    return 0;
-}
 ```
 
-## 线段树模板
+### 三点共线
+
+
+## 线段树 模板
+
+### 基础模板
+```c++
+#include<iostream>
+#include<cstdio>
+#include<algorithm>
+#include<cstring>
+using namespace std;
+
+const int N = 500010;
+
+int n, m;
+int w[N];
+struct Node
+{
+    int l, r;
+    int sum, lmax, rmax, tmax;
+}tr[N*4];
+
+void pushup(Node &u, Node &l, Node &r)
+{
+    u.sum = l.sum + r.sum;
+    u.lmax = max(l.sum + r.lmax, l.lmax);
+    u.rmax = max(r.rmax, r.sum + l.rmax);
+    u.tmax = max(max(l.tmax, r.tmax), l.rmax+r.lmax);
+}
+void pushup(int u)
+{
+    pushup(tr[u], tr[u<<1], tr[u<<1|1]);
+    
+}
+void build(int u, int l, int r)
+{
+    if (l == r)
+    {
+        tr[u] = {l, r, w[r], w[r], w[r], w[r]};
+    }
+    else
+    {
+        tr[u] = {l,r};
+        int mid  = l + r >> 1;
+        build(u << 1, l, mid), build(u<<1|1, mid + 1, r);
+        pushup(u);
+    }
+}
+
+void modify(int u, int x, int v)
+{
+    if (tr[u].l == x && tr[u].r == x)
+    {
+        tr[u] = {x, x, v,v,v,v};
+    }
+    else{
+        int mid = tr[u].l + tr[u].r >> 1;
+        if (x <= mid) modify(u << 1, x, v);
+        else modify(u << 1| 1, x, v);
+        pushup(u);
+    }
+}
+
+Node query(int u, int l, int r)
+{
+    if (tr[u].l >= l && tr[u].r <= r) return tr[u];
+    else
+    {
+        int mid = tr[u].l + tr[u].r >> 1;
+        if (r <= mid) return query(u<<1, l, r);
+        else if (l > mid) return query(u << 1 | 1, l, r);
+        auto left = query(u<<1, l ,r);
+        auto right = query(u << 1|1, l, r);
+        Node res;
+        pushup(res, left, right);
+        return res;
+    }
+}
+
+int main()
+{
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++) cin >> w[i];
+    build(1, 1, n);
+    int k, x, y;
+    while (m--)
+    {
+        cin >> k >> x >> y;
+        if (k == 1)
+        {
+            if (x > y) swap(x, y);
+            cout << query(1, x, y).tmax << endl;
+        }
+        else modify(1, x, y);
+    }
+}
+
+```
 ### 区间修改加等差数列
 ```c++
 #include <iostream>
@@ -3644,3 +4757,717 @@ int main()
     return 0;
 }
 ```
+### 权值 线段树
+
+```c++
+const int N  = 1e7 + 10;
+int num[N<<2];
+void update(int p,int l,int r,int v,int op)//op==1或-1,插入或删除 
+{
+	num[p]+=op;
+	if(l==r)return;
+	int mid=(l+r)>>1;
+	if(v<=mid)update(p<<1,l,mid,v,op);
+	else update(p<<1|1,mid+1,r,v,op); 
+}
+ 
+int Kth(int p,int l,int r,int rank)//k小值 
+{
+	if(l==r)return l;
+	int mid=(l+r)>>1;
+	if(num[p<<1]>=rank)return Kth(p<<1,l,mid,rank);//左子k小 
+	return Kth(p<<1|1,mid+1,r,rank-num[p<<1]);//右子(k-左num)小 
+} 
+ 
+//求一个数的最小排名，排名从0起 
+int Rank(int p,int l,int r,int v)//[1,v-1]的出现个数 即v-1>mid 即前面3个数v就rank3 
+{
+	if(r<v)return num[p];
+	int mid=(l+r)>>1,res=0;
+	if(v>l)res+=Rank(p<<1,l,mid,v);//左段区间得有比v小的值,才有加的意义，比如说rank[1]=0 
+	if(v>mid+1)res+=Rank(p<<1|1,mid+1,r,v);//右段区间得有比v小的值,才有加的意义 
+	return res;
+} 
+ 
+int Findpre(int p,int l,int r)
+{
+	if(l==r)return l;
+	int mid=(l+r)>>1;
+	if(num[p<<1|1])return Findpre(p<<1|1,mid+1,r);//右子树非空向右找 
+	return Findpre(p<<1,l,mid);//否则向左找 
+}
+//找前驱 尽可能在小于v的右子树找 
+int Pre(int p,int l,int r,int v)
+{
+	if(r<v)//maxr<v即在p的子树中 p区间内最右非空子树即答案 
+	{
+		if(num[p])return Findpre(p,l,r);
+		return 0;
+	}
+	int mid=(l+r)>>1,Re;
+	//如果v在右子树可能有前驱(至少mid+1比v小)就先查右子树,l=mid+1 
+	if(mid+1<v&&num[p<<1|1]&&(Re=Pre(p<<1|1,mid+1,r,v)))return Re;
+	//否则查左子树,r=mid,使r不断变小直至满足题意小于v 
+	return Pre(p<<1,l,mid,v);
+} 
+ 
+int Findnext(int p,int l,int r)
+{
+	if(l==r)return l;
+	int mid=(l+r)>>1;
+	if(num[p<<1])return Findnext(p<<1,l,mid);
+	return Findnext(p<<1|1,mid+1,r);
+} 
+ 
+//找后继 尽可能在大于v的左子树找 
+int Next(int p,int l,int r,int v)
+{
+    // cout << p << " " << l << " " << r << " " << v << endl;
+	if(v<l)//已找到大于v的最小完整区间 
+	{
+		if(num[p])return Findnext(p,l,r); 
+		return 0;
+	}
+	int mid=(l+r)>>1,Re;
+	//如果左子树里有比v大的(至少mid比v大)就查左子树 否则查右子树 
+	if(v<mid&&num[p<<1]&&(Re=Next(p<<1,l,mid,v)))return Re;
+	return Next(p<<1|1,mid+1,r,v);
+}
+ 
+
+
+signed main()
+{
+    STDIN
+    int n; cin >> n;
+    for (int i = 1; i <= n; i++)
+    {
+        int opt, x;
+        opt = read(), x = read();
+        // cout << opt << " " << x << endl;
+        if (opt == 1) update(1,1,10000000,x,1);
+        if (opt == 2) update(1,1,10000000,x,-1);
+        if (opt == 3) cout << Rank(1,1,10000000,x)+1<<endl;
+        if (opt == 4) cout << Kth(1,1,10000000,x)<<endl;;
+        if (opt == 5) cout << Pre(1,1, 10000000, x)<<endl;;
+        if (opt==6) cout<< Next(1,1,10000000,x)<<endl;
+    }
+}
+```
+### 平衡树
+
+#### splay
+```c++
+const int maxn = 1e5 + 10;
+
+int N, M, K;
+
+struct Splay
+{
+#define root e[0].ch[1]
+    struct node
+    {
+        int ch[2];
+        int sum, num;
+        int v, fa;
+    } e[maxn];
+
+    int n, points;
+    void update(int x)
+    {
+        e[x].sum = e[e[x].ch[0]].sum + e[e[x].ch[1]].sum + e[x].num;
+    }
+    int id(int x)
+    {
+        return x == e[e[x].fa].ch[0] ? 0 : 1;
+    }
+    void connect(int x, int y, int p)
+    {
+        e[x].fa = y;
+        e[y].ch[p] = x;
+    }
+    int find(int v)
+    {
+        int now = root;
+        while (1)
+        {
+            if (e[now].v == v)
+            {
+                splay(now, root);
+                return now;
+            }
+            int next = v < e[now].v ? 0 : 1;
+            if (!e[now].ch[next])
+                return 0;
+            now = e[now].ch[next];
+        }
+        return 0;
+    }
+
+    void rotate(int x)
+    {
+        int y = e[x].fa;
+        int z = e[y].fa;
+        int ix = id(x), iy = id(y);
+        connect(e[x].ch[ix ^ 1], y, ix);
+        connect(y, x, ix ^ 1);
+        connect(x, z, iy);
+        update(y);
+        update(x);
+    }
+    void splay(int u, int v)
+    {
+        v = e[v].fa;
+        while (e[u].fa != v)
+        {
+            int fu = e[u].fa;
+            if (e[fu].fa == v)
+                rotate(u);
+            else if (id(u) == id(fu))
+            {
+                rotate(fu);
+                rotate(u);
+            }
+            else
+            {
+                rotate(u);
+                rotate(u);
+            }
+        }
+    }
+    int crenode(int v, int father)
+    {
+        n++;
+        e[n].ch[0] = e[n].ch[1] = 0;
+        e[n].fa = father;
+        e[n].num = e[n].sum = 1;
+        e[n].v = v;
+        return n;
+    }
+    void destroy(int x)
+    {
+        e[x].v = e[x].fa = e[x].num = e[x].sum = e[x].v = 0;
+        if (x == n)
+            n--;
+    }
+    int insert(int v)
+    {
+        points++;
+        if (points == 1)
+        {
+            n = 0;
+            root = 1;
+            crenode(v, 0);
+            return 1;
+        }
+        else
+        {
+            int now = root;
+            while (1)
+            {
+                e[now].sum++;
+                if (v == e[now].v)
+                {
+                    e[now].num++;
+                    return now;
+                }
+                int next = v < e[now].v ? 0 : 1;
+                if (!e[now].ch[next])
+                {
+                    crenode(v, now);
+                    e[now].ch[next] = n;
+                    return n;
+                }
+                now = e[now].ch[next];
+            }
+        }
+    }
+
+    void push(int v) // 添加元素
+    {
+        int add = insert(v);
+        splay(add, root);
+    }
+    void pop(int x)
+    {
+        int pos = find(x);
+        if (!pos)
+            return;
+        points--;
+        if (e[pos].num > 1)
+        {
+            e[pos].num--;
+            e[pos].sum--;
+            return;
+        }
+        if (!e[pos].ch[0])
+        {
+            root = e[pos].ch[1];
+            e[root].fa = 0;
+        }
+        else
+        {
+            int lef = e[pos].ch[0];
+            while (e[lef].ch[1])
+                lef = e[lef].ch[1];
+            splay(lef, e[pos].ch[0]);
+            int rig = e[pos].ch[1];
+            connect(rig, lef, 1);
+            connect(lef, 0, 1);
+            update(lef);
+        }
+        destroy(pos);
+    }
+
+    int atrank(int x)
+    {
+        if (x > points)
+            return -INF;
+        int now = root;
+        while (1)
+        {
+            int mid = e[now].sum - e[e[now].ch[1]].sum;
+            if (x > mid)
+            {
+                x -= mid;
+                now = e[now].ch[1];
+            }
+            else if (x <= e[e[now].ch[0]].sum)
+            {
+                now = e[now].ch[0];
+            }
+            else
+                break;
+        }
+        splay(now, root);
+        return e[now].v;
+    }
+
+    int rank(int x)
+    {
+        int now = find(x);
+        if (!now)
+            return 0;
+        return e[e[now].ch[0]].sum + 1;
+    }
+    int upper(int v)
+    {
+        int now = root;
+        int ans = INF;
+        while (now)
+        {
+            if (e[now].v > v && e[now].v < ans)
+                ans = e[now].v;
+            if (v < e[now].v)
+                now = e[now].ch[0];
+            else
+                now = e[now].ch[1];
+        }
+        return ans;
+    }
+    int lower(int v)
+    {
+        int now = root;
+        int ans = -INF;
+        while (now)
+        {
+            if (e[now].v < v && e[now].v > ans)
+                ans = e[now].v;
+            if (v > e[now].v)
+                now = e[now].ch[1];
+            else
+                now = e[now].ch[0];
+        }
+        return ans;
+    }
+#undef root
+} F;
+
+int main()
+{
+    STDIN
+    cin >> N;
+    while (N--)
+    {
+        int x, op;
+        cin >> op >> x;
+        if (op == 1)
+            F.push(x); //插入一个元素
+        else if (op == 2)
+            F.pop(x); //删除一个元素
+        else if (op == 3)
+        cout << F.rank(x) << endl; //查询 x 数的排名 (排名定义为比当前数小的数的个,→ 数 +1+1。若有多个相同的数，因输出最小的排名)
+        else if(op == 4) cout << (F.atrank(x)) << endl; //查询排名为 x 的数
+        else if (op == 5) cout << (F.lower(x)) << endl; //求 xx 的前驱 (前驱定义为小于 xx，且最大的数)
+        else cout << (F.upper(x)) << endl;;              //求 x
+    }
+}
+```
+#### 红黑树
+```c++
+#include <cstdio>
+#include <iostream>
+ 
+#define Max 100001
+ 
+#define Red true
+#define Black false
+ 
+const int BUF = 100000100;
+char Buf[BUF], *buf = Buf;
+ 
+#define Inline __attri\
+bute__( ( optimize( "-O2" ) ) )
+Inline void read (int &now)
+{
+    int temp = 0;
+    for (now = 0; !isdigit (*buf); ++ buf)
+        if (*buf == '-')
+            temp = 1;
+    for (; isdigit (*buf); now = now * 10 + *buf - '0', ++ buf);
+    if (temp)    
+        now = -now;
+}
+ 
+struct R_D
+{
+    int key, size, weigth;
+    bool color;
+    
+    R_D *father, *child[2];
+    
+    Inline void Fill (const int &__key, const bool &__color, const int &z, register R_D *now)
+    {
+        this->key = __key;
+        this->color = __color;
+        this->size = this->weigth = z;
+        
+        this->father = this->child[0] = this->child[1] = now;
+    }
+    
+    Inline void Up ()
+    {
+        this->size = this->child[0]->size + this->child[1]->size + this->weigth;
+    }
+    
+    Inline void Down ()
+    {
+        for (R_D *now = this; now->size; now = now->father)
+            now->size --;
+    }
+    
+    Inline int Get_Pos (const int &now) const
+    {
+        return this->key == now ? -1 : now > this->key;
+    } 
+};
+ 
+ 
+class Red_Black_Tree
+{
+    
+    private :
+        
+        int Top;
+        
+        R_D *Root, *null;
+        R_D poor[Max], *Tail, *reuse[Max];
+        
+        
+        Inline R_D *New (const int &key)
+        {
+            register R_D *now = null;
+            if (!Top)
+                now = Tail ++;
+            else
+                now = reuse[-- Top];
+            now->Fill (key, Red, 1, null);
+            return now;
+        }
+        
+        Inline void Rotate (R_D *&now, const bool &pos)
+        {
+            register R_D *C = now->child[pos ^ 1];
+            now->child[pos ^ 1] = C->child[pos];
+            if (C->child[pos]->size)
+                C->child[pos]->father = now;
+            C->father = now->father;
+            if (!now->father->size)
+                Root = C;
+            else 
+                now->father->child[now->father->child[0] != now] = C;
+            C->child[pos] = now;
+            now->father = C;
+            C->size = now->size;
+            now->Up ();
+        }
+        
+        Inline void Insert_Fill (register R_D *&now)
+        {
+            for (; now->father->color; )
+            {
+                R_D *Father = now->father, *Grand = Father->father;
+                bool pos = Father == Grand->child[0];
+                R_D *Uncle = Grand->child[pos];
+                if (Uncle->color)
+                {
+                    Father->color = Uncle->color = Black;
+                    Grand->color = Red;
+                    now = Grand;
+                }
+                else if (now == Father->child[pos])
+                    Rotate (now = Father, pos ^ 1);
+                else
+                {
+                    Grand->color = Red;
+                    Father->color = Black;
+                    Rotate (Grand, pos);
+                }
+            }
+            Root->color = Black;
+        }
+        
+        Inline R_D *Find (R_D *now, int key)
+        {
+            for (; now->size && now->key != key; now = now->child[now->key < key]);
+            return now;
+        }
+        
+        Inline void Delete_Fill (register R_D *&now)
+        {
+            for (; now != Root && now->color == Black; )
+            {
+                register bool pos = now == now->father->child[0];
+                R_D *Father = now->father, *Uncle = Father->child[pos];
+                if (Uncle->color == Red)
+                {
+                    Uncle->color = Black;
+                    Father->color = Red;
+                    Rotate (now->father, pos ^ 1);
+                    Uncle = Father->child[pos];
+                }
+                else if (Uncle->child[0]->color == Black && Uncle->child[1]->color == Black)
+                {
+                    Uncle->color = Red;
+                    now = Father;
+                }
+                else
+                {
+                    if (Uncle->child[pos]->color == Black)
+                    {
+                        Uncle->child[pos ^ 1]->color = Black;
+                        Uncle->color = Red;
+                        Rotate (Uncle, pos);
+                        Uncle = Father->child[pos];
+                    }
+                    Uncle->color = Father->color;
+                    Uncle->child[pos]->color = Father->color = Black;
+                    Rotate (Father, pos ^ 1);
+                    break;
+                }
+            }
+            now->color = Black;
+        }
+        
+    public :
+        
+        Red_Black_Tree ()
+        {
+            Top = 0;
+            Tail = &poor[Top];
+            null = Tail ++;
+            null->Fill (0, Black, 0, NULL);
+            Root = null;
+        }
+        
+        Inline void Insert (const int &key)
+        {
+            register R_D *now = Root, *Father = null;
+            register int pos;
+            for (; now->size; now = now->child[pos])
+            {
+                now->size ++;
+                Father = now;
+                pos = now->Get_Pos (key);
+                if (pos == -1)
+                {
+                    now->weigth ++;
+                    return ;
+                }
+            }
+            now = New (key);
+            if (Father->size)
+                Father->child[key > Father->key] = now;
+            else
+                Root = now;
+            now->father = Father;
+            this->Insert_Fill (now); 
+        }
+        
+        Inline void Delete (const int &key)
+        {
+            register R_D *res = Find (Root, key);
+            if (!res->size)
+                return ;
+            if (res->weigth > 1)
+            {
+                res->weigth --;
+                res->Down ();
+                return ;
+            }
+            register R_D *Father = res, *now = null;
+            
+            if (res->child[0]->size && res->child[1]->size)
+                for (Father = res->child[1]; Father->child[0]->size; Father = Father->child[0]);
+            
+            now = Father->child[!Father->child[0]->size];
+            now->father = Father->father;
+            if (!Father->father->size)
+                Root = now;
+            else
+                Father->father->child[Father->father->child[1] == Father] = now;
+            
+            if (res != Father)
+            {
+                res->key = Father->key;
+                res->weigth = Father->weigth;
+            }
+            
+            Father->father->Down ();
+    
+            for (R_D *Fuck = Father->father; Father->weigth > 1 && Fuck->size && Fuck != res; Fuck->size -= Father->weigth - 1, Fuck = Fuck->father);
+    
+            if (Father->color == Black)
+                Delete_Fill (now);
+            
+            reuse[Top ++] = Father;
+        }
+        
+        Inline int Get_kth_number (register int k)
+        {
+            register int res;
+            register R_D *now = Root;
+            
+            for (; now->size; )
+            {
+                res = now->child[0]->size;
+                
+                if (k <= res)
+                    now = now->child[0];
+                else if (res + 1 <= k && k <= res + now->weigth)
+                    break;
+                else 
+                {
+                    k -= res + now->weigth;
+                    now = now->child[1];
+                }
+            }
+            return now->key;
+        }
+        
+        Inline int Get_rank (const int &key)
+        {
+            register int res, cur = 0;
+            register R_D *now = Root;
+            
+            for (; now->size; )
+            {
+                res = now->child[0]->size;
+                if (now->key == key)
+                    break;
+                else if (now->key > key)
+                    now = now->child[0];
+                else
+                {
+                    cur += res + now->weigth;
+                    now = now->child[1];
+                }
+            }
+            
+            return cur + res + 1;
+        }
+        
+        Inline int Find_Suffix (const int &key)
+        {
+            register int res = 0;
+            
+            for (R_D *now = Root; now->size; )
+                if (now->key > key)
+                {
+                    res = now->key;
+                    now = now->child[0];
+                }
+                else 
+                    now = now->child[1];
+            
+            return res;
+        
+        }
+        
+        Inline int Find_Prefix (const int &key)
+        {
+            register int res = 0;
+            
+            for (R_D *now = Root; now->size; )
+                if (now->key < key)
+                {
+                    res = now->key;
+                    now = now->child[1];
+                }
+                else
+                    now = now->child[0];
+            return res;
+        }
+};
+ 
+Red_Black_Tree Rbt;
+ 
+int N;
+ 
+int Main ()
+{
+    fread (buf, 1, BUF, stdin);
+    read (N);
+    
+    for (int type, x; N --; )
+    {
+        read (type);
+        read (x);
+        
+        switch (type)
+        {
+            case 1:
+                Rbt.Insert (x);
+                break;
+            case 2:
+                Rbt.Delete (x);
+                break;
+            case 3:
+                printf ("%d\n", Rbt.Get_rank (x));
+                break;  
+            case 4:
+                printf ("%d\n", Rbt.Get_kth_number (x));
+                break;
+            case 5:
+                printf ("%d\n", Rbt.Find_Prefix (x));
+                break;
+            case 6:
+                printf ("%d\n", Rbt.Find_Suffix (x));
+                break;
+        }
+    }
+    
+    return 0;
+}
+int sb=Main();
+int main(int argc, char *argv[]){;}
+```
+ ## 离散数学
+
+ ### 狄尔沃斯定理
+
+ - 狄尔沃斯定理(Dilworth's theorem)亦称偏序集分解定理，是关于偏序集的极大极小的定理，该定理断言：对于任意有限偏序集，其最大反链中元素的数目必等于最小链划分中链的数目。
+
+- “能覆盖整个序列的最少的不上升子序列的个数”等价于“该序列的最长上升子序列长度”
+同理即有：
+- “能覆盖整个序列的最少的不下降子序列的个数”等价于“该序列的最长下降子序列长度”
